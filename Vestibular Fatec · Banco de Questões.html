@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vestibular Fatec · Banco de Questões</title>
+<style>
+/* Skip artifact shell — fixed styles served beside every artifact.
+   Tokens, utilities and components (basecoat 1.0 markup, no CDN); artifacts
+   override --accent for their own identity. */
+:root {
+  color-scheme: light dark;
+  --accent: #2563eb;
+  --accent-contrast: #ffffff;
+  --accent-text: color-mix(in srgb, var(--accent) 72%, #000);
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --text: #14171f;
+  --text-muted: #5b6472;
+  --border: rgba(20, 23, 31, 0.10);
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(20, 23, 31, 0.08);
+  --space: 16px;
+  --success: #0a7a35;
+  --danger: #c0262d;
+  --warning: #8a5300;
+}
+/* Theme resolution. Without data-theme the viewer's system preference decides,
+   as it always did. With it, the artifact's own choice wins in BOTH directions:
+   a page that hardcodes one palette must not be handed the opposite set of
+   tokens by the machine it happens to be opened on. The dark values appear
+   twice because a media query cannot be folded into a selector list.
+   The attribute sits inside :where() so these blocks keep the specificity of a
+   bare :root — the page's own <style> is linked after this file and must go on
+   overriding any token it wants, exactly as it could before. */
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    --accent-text: color-mix(in srgb, var(--accent) 78%, #fff);
+    --bg: #101318;
+    --surface: #181c23;
+    --text: #eef1f6;
+    --text-muted: #9aa4b2;
+    --border: rgba(238, 241, 246, 0.12);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --success: #4ade80;
+    --danger: #f87171;
+    --warning: #fbbf24;
+  }
+}
+:root:where([data-theme="dark"]) {
+  color-scheme: dark;
+  --accent-text: color-mix(in srgb, var(--accent) 78%, #fff);
+  --bg: #101318;
+  --surface: #181c23;
+  --text: #eef1f6;
+  --text-muted: #9aa4b2;
+  --border: rgba(238, 241, 246, 0.12);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --success: #4ade80;
+  --danger: #f87171;
+  --warning: #fbbf24;
+}
+:root:where([data-theme="light"]) { color-scheme: light; }
+/* Pages generated before the shell had its own components still link the
+   basecoat CDN, which reads its own tokens and switches theme only on a
+   .dark class. Bridged to the shell's, whatever of it those pages use takes
+   the page's accent and follows the declared theme. Its --accent token is a
+   hover tint, renamed in its theme as --color-accent; the shell's --accent is
+   the brand colour, so the tint is derived from it here. */
+:root {
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface);
+  --popover-foreground: var(--text);
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-contrast);
+  --secondary: color-mix(in srgb, var(--text) 7%, var(--surface));
+  --secondary-foreground: var(--text);
+  --muted: color-mix(in srgb, var(--text) 5%, var(--surface));
+  --muted-foreground: var(--text-muted);
+  --color-accent: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  --color-accent-foreground: var(--text);
+  --destructive: var(--danger);
+  --input: var(--border);
+  --ring: var(--accent);
+}
+* { box-sizing: border-box; }
+/* The reset the pages were written against: they all linked basecoat, which
+   ships Tailwind's. Its components now live here, so the reset does too. */
+*, ::before, ::after, ::backdrop { margin: 0; padding: 0; border: 0 solid; }
+/* Preflight's rule too: without it a component class that sets display
+   (.alert, .card, .btn…) beats the hidden attribute and shows the element. */
+[hidden]:where(:not([hidden="until-found"])) { display: none !important; }
+.hidden { display: none !important; }
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+a { color: inherit; text-decoration: inherit; }
+b, strong { font-weight: bolder; }
+ol, ul, menu { list-style: none; }
+svg, video, canvas, iframe { display: block; vertical-align: middle; }
+button, input, select, textarea { color: inherit; background-color: transparent; border-radius: 0; }
+table { border-collapse: collapse; }
+hr { height: 0; color: inherit; border-top-width: 1px; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+
+.shell-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.shell-section { padding: calc(var(--space) * 2) 0; }
+.shell-grid { display: grid; gap: var(--space); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.shell-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: var(--space); }
+.shell-footer { padding: 24px 0 40px; color: var(--text-muted); font-size: 13px; }
+
+.shell-hero { padding: calc(var(--space) * 3) 0 calc(var(--space) * 2); }
+.shell-hero h1 { font-size: clamp(26px, 4vw, 40px); line-height: 1.15; margin: 0 0 10px; text-wrap: balance; }
+.shell-hero p { color: var(--text-muted); max-width: 60ch; margin: 0; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space);
+}
+
+.kpi { display: flex; flex-direction: column; gap: 4px; }
+.kpi .kpi-value { font-size: clamp(22px, 2.3vw, 28px); font-weight: 650; line-height: 1.1; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.kpi .kpi-label { font-size: 13px; color: var(--text-muted); }
+.kpi .kpi-delta { font-size: 12.5px; font-weight: 600; }
+.kpi .kpi-delta.up { color: var(--success); }
+.kpi .kpi-delta.down { color: var(--danger); }
+
+table.shell-table { border-collapse: collapse; width: 100%; font-size: 14px; }
+table.shell-table th {
+  text-align: left; font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600;
+}
+table.shell-table th, table.shell-table td { padding: 9px 12px 9px 0; border-bottom: 1px solid var(--border); }
+table.shell-table td.num, table.shell-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+
+.chart-box { width: 100%; min-height: 220px; }
+.chart-box svg { width: 100%; height: auto; display: block; }
+.chart-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin-top: 12px; font-size: 12.5px; color: var(--text-muted); }
+.chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart-legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.chart-legend b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.muted { color: var(--text-muted); }
+.accent { color: var(--accent-text); }
+.shell-badge, .eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent-text);
+}
+/* A pill keeps its content width inside flex and grid columns, which would
+   otherwise stretch it across the card; a centred parent still centres it. */
+.shell-badge, .eyebrow, .badge { width: fit-content; max-width: 100%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .shell-fade { animation: shell-fade 400ms ease both; }
+  @keyframes shell-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
+
+/* Layout and type utilities: what the pages kept spelling in style="".
+   Spacing and type sizes follow Tailwind's scale; there is no Tailwind. */
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.stack { display: flex; flex-direction: column; gap: var(--space); }
+.between { justify-content: space-between; }
+.grow { flex: 1 1 0; min-width: 0; }
+.cols-2, .cols-3, .cols-4, .cols-5 { display: grid; gap: var(--space); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) {
+  .cols-2, .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cols-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1000px) { .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.gap-1 { gap: 4px; } .gap-2 { gap: 8px; } .gap-3 { gap: 12px; } .gap-4 { gap: 16px; } .gap-6 { gap: 24px; }
+.m-0 { margin: 0; }
+.mt-1 { margin-top: 4px; } .mt-2 { margin-top: 8px; } .mt-3 { margin-top: 12px; } .mt-4 { margin-top: 16px; } .mt-6 { margin-top: 24px; }
+.mb-1 { margin-bottom: 4px; } .mb-2 { margin-bottom: 8px; } .mb-3 { margin-bottom: 12px; } .mb-4 { margin-bottom: 16px; } .mb-6 { margin-bottom: 24px; }
+.p-2 { padding: 8px; } .p-3 { padding: 12px; } .p-4 { padding: 16px; } .p-6 { padding: 24px; }
+.text-xs { font-size: 12px; } .text-sm { font-size: 14px; } .text-base { font-size: 16px; }
+.text-lg { font-size: 18px; } .text-xl { font-size: 20px; line-height: 1.35; }
+.text-2xl { font-size: 24px; line-height: 1.25; } .text-3xl { font-size: 30px; line-height: 1.2; }
+.font-medium { font-weight: 500; } .font-semibold { font-weight: 600; } .font-bold { font-weight: 700; }
+.text-right { text-align: right; } .text-center { text-align: center; }
+.nowrap { white-space: nowrap; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
+.w-full { width: 100%; }
+.text-success { color: var(--success); } .text-danger { color: var(--danger); } .text-warning { color: var(--warning); }
+
+/* Components, with basecoat 1.0 markup (variants and sizes are data
+   attributes) and the shell tokens, so a page needs neither component CSS
+   nor a CSS framework. An older page that also links basecoat gets these
+   rules after it, over the same properties. */
+button, input, select, textarea { font: inherit; }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 36px; padding: 0 14px; border: 1px solid transparent; border-radius: calc(var(--radius) - 2px);
+  background: var(--accent); color: var(--accent-contrast);
+  font-size: 14px; font-weight: 500; line-height: 1; white-space: nowrap; text-decoration: none; cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+.btn:hover { background: color-mix(in srgb, var(--accent) 86%, #000); }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
+.btn[data-variant="secondary"] { background: color-mix(in srgb, var(--text) 8%, var(--surface)); color: var(--text); }
+.btn[data-variant="secondary"]:hover { background: color-mix(in srgb, var(--text) 14%, var(--surface)); }
+.btn[data-variant="outline"] { background: var(--surface); color: var(--text); border-color: var(--border); }
+.btn[data-variant="ghost"] { background: transparent; color: var(--text); }
+.btn[data-variant="outline"]:hover, .btn[data-variant="ghost"]:hover { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
+.btn[data-variant="destructive"] { background: var(--danger); color: var(--bg); }
+.btn[data-variant="destructive"]:hover { background: color-mix(in srgb, var(--danger) 86%, var(--text)); }
+.btn[data-variant="link"] { height: auto; padding: 0; background: none; color: var(--accent-text); text-decoration: underline; text-underline-offset: 3px; }
+.btn[data-size="sm"] { height: 30px; padding: 0 10px; font-size: 13px; }
+.btn[data-size="lg"] { height: 42px; padding: 0 20px; font-size: 15px; }
+.btn[data-size="icon"] { width: 36px; padding: 0; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+  border: 1px solid transparent; border-radius: 999px; background: var(--accent); color: var(--accent-contrast);
+  font-size: 12px; font-weight: 600; line-height: 1.5; white-space: nowrap;
+}
+.badge[data-variant="secondary"] { background: color-mix(in srgb, var(--text) 8%, var(--surface)); color: var(--text); }
+.badge[data-variant="outline"] { background: transparent; color: var(--text); border-color: var(--border); }
+.badge[data-variant="destructive"] { background: color-mix(in srgb, var(--danger) 14%, var(--surface)); color: var(--danger); }
+
+.alert {
+  display: grid; gap: 4px; padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text); font-size: 14px;
+}
+.alert h2, .alert h3 { margin: 0; font-size: 14px; font-weight: 600; }
+.alert p, .alert section { margin: 0; color: var(--text-muted); }
+.alert[data-variant="destructive"] { border-color: color-mix(in srgb, var(--danger) 45%, var(--border)); background: color-mix(in srgb, var(--danger) 7%, var(--surface)); color: var(--danger); }
+
+.card {
+  display: flex; flex-direction: column; gap: 16px; padding: 20px 0;
+  border: 1px solid var(--border); border-radius: calc(var(--radius) + 2px);
+  background: var(--surface); color: var(--text); box-shadow: var(--shadow);
+}
+.card > header, .card > section, .card > footer { padding: 0 20px; }
+.card > header { display: grid; gap: 4px; }
+.card > header h2, .card > header h3 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3; }
+.card > header p { margin: 0; color: var(--text-muted); font-size: 14px; }
+.card > footer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+.input {
+  width: 100%; min-height: 36px; padding: 6px 12px; border: 1px solid var(--border); border-radius: calc(var(--radius) - 2px);
+  background: var(--surface); color: var(--text); font-size: 14px;
+}
+textarea.input { min-height: 84px; resize: vertical; }
+.input::placeholder { color: var(--text-muted); }
+.input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 14px; font-weight: 500; }
+.field [role="alert"] { color: var(--danger); font-size: 13px; }
+
+dialog.dialog {
+  width: min(520px, calc(100vw - 32px)); max-height: calc(100vh - 32px); margin: auto; padding: 0;
+  border: 1px solid var(--border); border-radius: calc(var(--radius) + 4px);
+  background: var(--surface); color: var(--text); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+dialog.dialog::backdrop { background: rgba(0, 0, 0, 0.5); }
+dialog.dialog > div { display: grid; gap: 16px; padding: 24px; }
+dialog.dialog header { display: grid; gap: 4px; }
+dialog.dialog header h2 { margin: 0; font-size: 18px; font-weight: 600; }
+dialog.dialog header p { margin: 0; color: var(--text-muted); font-size: 14px; }
+dialog.dialog footer { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+
+.tabs { display: grid; gap: 12px; }
+.tabs > [role="tablist"] {
+  display: inline-flex; gap: 4px; width: fit-content; max-width: 100%; padding: 4px; overflow-x: auto;
+  border-radius: var(--radius); background: color-mix(in srgb, var(--text) 6%, var(--surface));
+}
+.tabs [role="tab"] {
+  padding: 6px 12px; border: 0; border-radius: calc(var(--radius) - 4px); background: transparent;
+  color: var(--text-muted); font-size: 14px; font-weight: 500; white-space: nowrap; cursor: pointer;
+}
+.tabs [role="tab"][aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+.tabs [role="tabpanel"][hidden] { display: none; }
+
+.accordion > details { border-bottom: 1px solid var(--border); }
+.accordion > details > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 0; font-weight: 500; list-style: none; cursor: pointer;
+}
+.accordion > details > summary::-webkit-details-marker { display: none; }
+.accordion > details > summary::after { content: "+"; color: var(--text-muted); font-size: 18px; line-height: 1; }
+.accordion > details[open] > summary::after { content: "\2212"; }
+.accordion > details > :not(summary) { margin: 0 0 14px; color: var(--text-muted); }
+
+.toaster {
+  position: fixed; right: 16px; bottom: 16px; z-index: 50; display: flex; flex-direction: column-reverse; gap: 8px;
+  width: min(360px, calc(100vw - 32px)); pointer-events: none;
+}
+.toaster .toast { pointer-events: auto; transition: opacity 200ms ease, transform 200ms ease; }
+.toaster .toast[aria-hidden="true"] { opacity: 0; transform: translateY(8px); }
+.toaster .toast-content {
+  padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); font-size: 13px;
+}
+.toaster .toast-content h2 { margin: 0 0 2px; font-size: 14px; font-weight: 600; }
+.toaster .toast-content p { margin: 0; color: var(--text-muted); }
+
+/* skipUI building blocks. */
+.skip-table-search { max-width: 320px; margin-bottom: 12px; }
+.skip-table-wrap { overflow-x: auto; }
+table.shell-table th[data-sort] { cursor: pointer; user-select: none; }
+table.shell-table th[aria-sort="ascending"]::after { content: " \25B2"; font-size: 9px; }
+table.shell-table th[aria-sort="descending"]::after { content: " \25BC"; font-size: 9px; }
+table.shell-table td.skip-table-empty { color: var(--text-muted); text-align: center; padding: 24px 0; }
+.skip-pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; font-size: 13px; color: var(--text-muted); }
+.toaster .toast[data-type="success"] .toast-content { border-left: 3px solid var(--success); }
+.toaster .toast[data-type="error"] .toast-content { border-left: 3px solid var(--danger); }
+
+</style>
+<script>
+/* Skip artifact shell — fixed helpers served beside every artifact. */
+(function () {
+  "use strict";
+
+  var fmt = {
+    num: function (v, opts) { return new Intl.NumberFormat("pt-BR", opts || {}).format(v); },
+    brl: function (v) { return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v); },
+    pct: function (v) { return new Intl.NumberFormat("pt-BR", { style: "percent", maximumFractionDigits: 1 }).format(v); },
+    compact: function (v) { return new Intl.NumberFormat("pt-BR", { notation: "compact", maximumFractionDigits: 1 }).format(v); },
+    brlCompact: function (v) { return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", notation: "compact", maximumFractionDigits: 1 }).format(v); }
+  };
+
+  // axisLabels formats the five y-axis ticks in the unit the chart declared
+  // (percent, BRL or plain numbers), compact so long values never clip, with
+  // the fewest decimals that still print every tick exactly (1,5 mi, not 2 mi).
+  function axisLabels(format, ticks) {
+    function at(digits) {
+      var opts = { notation: "compact", maximumFractionDigits: digits };
+      if (format === "pct") opts = { style: "percent", maximumFractionDigits: digits };
+      else if (format === "brl") opts = { style: "currency", currency: "BRL", notation: "compact", maximumFractionDigits: digits };
+      var nf = new Intl.NumberFormat("pt-BR", opts);
+      return ticks.map(function (t) { return nf.format(t); });
+    }
+    for (var digits = 0; digits < 2; digits++) {
+      if (at(digits).join("|") === at(digits + 1).join("|")) return at(digits);
+    }
+    return at(2);
+  }
+
+  // yAxisPad formats the ticks and measures the left padding they need from
+  // the longest one; drawYAxis then draws the grid and the labels.
+  function yAxisPad(format, max) {
+    var labels = axisLabels(format, [0, max / 4, max / 2, (max * 3) / 4, max]);
+    var longest = labels.reduce(function (m, l) { return Math.max(m, l.length); }, 0);
+    return { labels: labels, padL: Math.max(40, Math.round(longest * 6.2) + 14) };
+  }
+  function drawYAxis(svg, axis, W, padR, padT, plotH) {
+    for (var g = 0; g <= 4; g++) {
+      var gy = padT + plotH - (plotH * g) / 4;
+      svg.appendChild(svgEl("line", { x1: axis.padL, y1: gy, x2: W - padR, y2: gy, stroke: "currentColor", "stroke-opacity": 0.08 }));
+      var lbl = svgEl("text", { x: axis.padL - 8, y: gy + 4, "text-anchor": "end", "font-size": 10, fill: mutedColor() });
+      lbl.textContent = axis.labels[g];
+      svg.appendChild(lbl);
+    }
+  }
+
+  // xLabelStep: show every k-th category label so labels never overlap, and
+  // always the last one (counted back from the end).
+  function xLabelStep(labels, step) {
+    var longest = labels.reduce(function (m, l) { return Math.max(m, String(l).length); }, 0);
+    return Math.max(1, Math.ceil((longest * 6.4 + 8) / Math.max(step, 1)));
+  }
+  function drawXLabel(svg, text, x, y, W, edgeGuard) {
+    var anchor = "middle";
+    var half = String(text).length * 3.2;
+    if (edgeGuard && x - half < 4) anchor = "start";
+    if (edgeGuard && x + half > W - 4) anchor = "end";
+    var tx = svgEl("text", { x: x, y: y, "text-anchor": anchor, "font-size": 11, fill: mutedColor() });
+    tx.textContent = text;
+    svg.appendChild(tx);
+  }
+  // categoryLines fits a bar's category name in its slot: one line, two lines
+  // split at a space, or cut with "…". A bar without its name can't be read, so
+  // categories are never skipped; null when the slot is too narrow for that.
+  function categoryLines(text, slot) {
+    var fit = Math.floor((slot - 6) / 6.4);
+    var s = String(text);
+    if (fit < 4) return null;
+    if (s.length <= fit) return [s];
+    var cut = function (t) { return t.length <= fit ? t : t.slice(0, fit - 1).trimEnd() + "…"; };
+    var best = -1;
+    for (var i = 0; i < s.length; i++) {
+      if (s[i] === " " && (best < 0 || Math.abs(s.length / 2 - i) < Math.abs(s.length / 2 - best))) best = i;
+    }
+    if (best < 0) return [cut(s)];
+    return [cut(s.slice(0, best)), cut(s.slice(best + 1))];
+  }
+  function legend(el, items) {
+    var box = document.createElement("div");
+    box.className = "chart-legend";
+    items.forEach(function (it) {
+      var row = document.createElement("span");
+      var dot = document.createElement("i");
+      dot.style.background = it.color;
+      row.appendChild(dot);
+      row.appendChild(document.createTextNode((it.label || "") + (it.value ? " " : "")));
+      if (it.value) {
+        var v = document.createElement("b");
+        v.textContent = it.value;
+        row.appendChild(v);
+      }
+      box.appendChild(row);
+    });
+    resolve(el).appendChild(box);
+  }
+  var seriesPalette = ["#1baf7a", "#eda100", "#e34948", "#4a3aa7", "#e87ba4", "#0ea5b7"];
+
+  // format accepts a function OR one of the fmt names ("num" | "brl" | "pct").
+  // A page's function may return nothing or throw: the chart prints its
+  // number instead of taking the rest of the page script down with it.
+  function coerceFormat(spec) {
+    if (typeof spec === "function") {
+      return function (v) {
+        try {
+          var out = spec(v);
+          return out == null ? "" : String(out);
+        } catch (e) {
+          return fmt.num(v);
+        }
+      };
+    }
+    if (typeof spec === "string" && fmt[spec]) return fmt[spec];
+    return function (v) { return fmt.num(v); };
+  }
+
+  function accent() {
+    return getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#2563eb";
+  }
+  function mutedColor() {
+    return getComputedStyle(document.documentElement).getPropertyValue("--text-muted").trim() || "#5b6472";
+  }
+  function svgEl(tag, attrs) {
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    return el;
+  }
+  function frame(el, w, h) {
+    var svg = svgEl("svg", { viewBox: "0 0 " + w + " " + h, role: "img" });
+    el = resolve(el);
+    el.innerHTML = "";
+    el.appendChild(svg);
+    return svg;
+  }
+
+  // maxOf guards the axis scale: empty values would give -Infinity (truthy,
+  // so "|| 1" can't catch it) and a non-positive max would flip the chart.
+  // finite reads a chart value as a number, 0 when it is not one (NaN,
+  // Infinity, a stray string), so one bad value cannot blank the axis.
+  function finite(v) {
+    var n = +v;
+    return isFinite(n) ? n : 0;
+  }
+
+  function maxOf(values) {
+    var m = values.length ? Math.max.apply(null, values.map(finite)) : 0;
+    return m > 0 ? m : 1;
+  }
+
+  // labelsFor pads or trims the category names to the n points drawn: pages
+  // pass labels and values of different lengths, and one throw here loses
+  // every section the page renders after the chart.
+  function labelsFor(cfg, n) {
+    var out = [];
+    for (var i = 0; i < n; i++) out.push(cfg.labels && cfg.labels[i] != null ? String(cfg.labels[i]) : "");
+    return out;
+  }
+
+  // niceMax rounds the scale up so the four grid steps land on round values
+  // (1, 1.5, 2, 2.5, 3, 4, 5, 6 or 8 × 10^k) and the tick labels read exactly.
+  function niceMax(max) {
+    var raw = max / 4;
+    var mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    var res = raw / mag;
+    var steps = [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
+    var nice = steps.filter(function (s) { return s >= res - 1e-9; })[0];
+    return nice * mag * 4;
+  }
+
+  // bar(el, {labels:[], values:[], color?, format?}) — vertical bar chart.
+  function bar(el, cfg) {
+    var W = 640, H = 280, padB = 30, padT = 12, padR = 12;
+    var max = niceMax(maxOf(cfg.values));
+    var axis = yAxisPad(cfg.format, max);
+    var svg = frame(el, W, H);
+    var n = cfg.values.length;
+    var labels = labelsFor(cfg, n);
+    var plotW = W - axis.padL - padR;
+    var step = plotW / n, bw = Math.min(step * 0.62, 64);
+    var names = labels.map(function (l) { return categoryLines(l, step); });
+    var named = names.every(Boolean);
+    if (named && names.some(function (l) { return l.length > 1; })) padB = 42;
+    var plotH = H - padT - padB;
+    var color = cfg.color || accent();
+    var f = coerceFormat(cfg.format);
+    var every = xLabelStep(labels, step);
+    drawYAxis(svg, axis, W, padR, padT, plotH);
+    cfg.values.forEach(function (v, i) {
+      var bh = Math.max(0, (finite(v) / max) * plotH);
+      var x = axis.padL + i * step + (step - bw) / 2;
+      var y = padT + plotH - bh;
+      var r = svgEl("rect", { x: x, y: y, width: bw, height: bh, rx: 4, fill: (cfg.colors && cfg.colors[i]) || color });
+      var t = svgEl("title", {});
+      t.textContent = labels[i] + ": " + f(v);
+      r.appendChild(t);
+      svg.appendChild(r);
+      if (named) {
+        names[i].forEach(function (text, li) {
+          drawXLabel(svg, text, x + bw / 2, padT + plotH + 18 + li * 13, W, false);
+        });
+      } else if ((n - 1 - i) % every === 0) {
+        drawXLabel(svg, labels[i], x + bw / 2, H - 10, W, false);
+      }
+    });
+  }
+
+  // line(el, {labels:[], values:[] | series:[{label, values, color?}], color?, format?})
+  // — one line, or several series on one scale with a legend under the chart.
+  function line(el, cfg) {
+    var W = 640, H = 280, padB = 30, padT = 12, padR = 16;
+    var series = cfg.series && cfg.series.length
+      ? cfg.series
+      : [{ label: "", values: cfg.values || [], color: cfg.color }];
+    var all = [];
+    series.forEach(function (s) { all = all.concat(s.values || []); });
+    var max = niceMax(maxOf(all));
+    var axis = yAxisPad(cfg.format, max);
+    var svg = frame(el, W, H);
+    var n = series.reduce(function (m, s) { return Math.max(m, (s.values || []).length); }, 0);
+    var labels = labelsFor(cfg, n);
+    var plotW = W - axis.padL - padR, plotH = H - padT - padB;
+    var f = coerceFormat(cfg.format);
+    drawYAxis(svg, axis, W, padR, padT, plotH);
+    var xs = labels.map(function (_, i) { return axis.padL + (n === 1 ? plotW / 2 : (plotW * i) / (n - 1)); });
+    var every = xLabelStep(labels, n > 1 ? plotW / (n - 1) : plotW);
+    labels.forEach(function (label, i) {
+      if ((n - 1 - i) % every === 0) drawXLabel(svg, label, xs[i], H - 10, W, true);
+    });
+    var colors = series.map(function (s, si) {
+      return s.color || (si === 0 ? (cfg.color || accent()) : seriesPalette[(si - 1) % seriesPalette.length]);
+    });
+    series.forEach(function (s, si) {
+      var color = colors[si];
+      var pts = (s.values || []).map(function (v, i) { return [xs[i], padT + plotH - (finite(v) / max) * plotH]; });
+      var d = pts.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1); }).join(" ");
+      svg.appendChild(svgEl("path", { d: d, fill: "none", stroke: color, "stroke-width": 2, "stroke-linejoin": "round" }));
+      pts.forEach(function (p, i) {
+        var c = svgEl("circle", { cx: p[0], cy: p[1], r: 3.5, fill: color });
+        var t = svgEl("title", {});
+        t.textContent = (s.label ? s.label + " · " : "") + labels[i] + ": " + f(s.values[i]);
+        c.appendChild(t);
+        svg.appendChild(c);
+      });
+    });
+    if (series.length > 1) {
+      legend(el, series.map(function (s, si) { return { label: s.label, color: colors[si] }; }));
+    }
+  }
+
+  // donut(el, {labels:[], values:[], colors?, format?, center?, centerLabel?, legend?})
+  // — donut with a short total in the centre (compact, in the declared unit)
+  // and, with legend: true, the labels and shares listed under it.
+  function donut(el, cfg) {
+    var W = 320, H = 280, cx = W / 2, cy = H / 2, R = 92, r = 58;
+    var svg = frame(el, W, H);
+    // At 100% of a wide container the donut outgrows the height pages give
+    // the box and spills over the next section: keep it at its own size.
+    svg.style.maxWidth = W + "px";
+    svg.style.margin = "0 auto";
+    var values = cfg.values.map(finite);
+    var labels = labelsFor(cfg, values.length);
+    var sum = values.reduce(function (a, b) { return a + b; }, 0);
+    var total = sum || 1;
+    var palette = cfg.colors || [accent()].concat(seriesPalette);
+    // The hover keeps the full value; the centre has room for a short one.
+    var full = coerceFormat(cfg.format);
+    var short = typeof cfg.format === "function" ? full : cfg.format === "brl" ? fmt.brlCompact : fmt.compact;
+    var a0 = -Math.PI / 2;
+    values.forEach(function (v, i) {
+      var a1 = a0 + (v / total) * Math.PI * 2;
+      var large = a1 - a0 > Math.PI ? 1 : 0;
+      var p = ["M", cx + R * Math.cos(a0), cy + R * Math.sin(a0),
+        "A", R, R, 0, large, 1, cx + R * Math.cos(a1), cy + R * Math.sin(a1),
+        "L", cx + r * Math.cos(a1), cy + r * Math.sin(a1),
+        "A", r, r, 0, large, 0, cx + r * Math.cos(a0), cy + r * Math.sin(a0), "Z"].join(" ");
+      var path = svgEl("path", { d: p, fill: palette[i % palette.length] });
+      var t = svgEl("title", {});
+      t.textContent = labels[i] + ": " + full(v) + " (" + fmt.pct(v / total) + ")";
+      path.appendChild(t);
+      svg.appendChild(path);
+      a0 = a1;
+    });
+    // A share chart has no total worth printing: without its own centre text
+    // the caption alone takes the middle.
+    var text = cfg.center != null ? String(cfg.center) : (cfg.format === "pct" ? "" : short(sum));
+    if (text) {
+      var size = text.length > 9 ? 14 : text.length > 7 ? 17 : 20;
+      var center = svgEl("text", { x: cx, y: cfg.centerLabel ? cy + 1 : cy + 6, "text-anchor": "middle", "font-size": size, "font-weight": 650, fill: "currentColor" });
+      center.textContent = text;
+      svg.appendChild(center);
+    }
+    if (cfg.centerLabel) {
+      var cap = svgEl("text", { x: cx, y: text ? cy + 19 : cy + 5, "text-anchor": "middle", "font-size": 11, fill: mutedColor() });
+      cap.textContent = cfg.centerLabel;
+      svg.appendChild(cap);
+    }
+    if (cfg.legend) {
+      legend(el, labels.map(function (label, i) {
+        return { label: label, color: palette[i % palette.length], value: fmt.pct(values[i] / total) };
+      }));
+    }
+  }
+
+  // ---- Page building blocks: what dashboards and small systems kept
+  // re-implementing — a searchable sortable table, a KPI row, tabs, toasts,
+  // dialogs, saved state and mock data. Every call is opt-in, so a page that
+  // brings its own versions keeps them.
+
+  function resolve(target) {
+    return typeof target === "string" ? document.querySelector(target) : target;
+  }
+
+  function node(tag, className, text) {
+    var el = document.createElement(tag);
+    if (className) el.className = className;
+    if (text != null) el.textContent = text;
+    return el;
+  }
+
+  function isNumberColumn(col) {
+    return col.align === "right" || col.format === "num" || col.format === "brl" || col.format === "pct";
+  }
+
+  function cellText(col, row) {
+    var value = row[col.key];
+    if (value == null) return "";
+    return col.format ? coerceFormat(col.format)(value) : String(value);
+  }
+
+  function compareValues(a, b) {
+    if (typeof a === "number" && typeof b === "number") return a - b;
+    return String(a == null ? "" : a).localeCompare(String(b == null ? "" : b), "pt-BR", { numeric: true });
+  }
+
+  // table(el, {columns, rows, search?, pageSize?, empty?, onRowClick?}) — a
+  // table.shell-table with sortable headers, an optional search box and
+  // pager. A column is {key, label, format?, align?, sortable? (true),
+  // render?(value, row) returning a Node or an HTML string — the page writes
+  // its cell templates as markup}. Plain values are always set as text.
+  // Returns {setRows, rows}.
+  function table(target, cfg) {
+    var root = resolve(target);
+    var cols = cfg.columns || [];
+    var pageSize = cfg.pageSize || 0;
+    var state = { rows: (cfg.rows || []).slice(), query: "", key: null, dir: 1, page: 0 };
+    root.innerHTML = "";
+    if (cfg.search) {
+      var search = node("input", "input skip-table-search");
+      search.type = "search";
+      search.placeholder = typeof cfg.search === "string" ? cfg.search : "Buscar…";
+      search.setAttribute("aria-label", search.placeholder);
+      search.addEventListener("input", function () {
+        state.query = search.value.trim().toLowerCase();
+        state.page = 0;
+        draw();
+      });
+      root.appendChild(search);
+    }
+    var tableEl = node("table", "shell-table");
+    var headRow = node("tr");
+    var heads = cols.map(function (col) {
+      var th = node("th", isNumberColumn(col) ? "num" : "", col.label == null ? col.key : col.label);
+      th.scope = "col";
+      if (col.sortable !== false) {
+        var toggle = function () {
+          state.dir = state.key === col.key ? -state.dir : 1;
+          state.key = col.key;
+          draw();
+        };
+        th.setAttribute("data-sort", col.key);
+        th.tabIndex = 0;
+        th.addEventListener("click", toggle);
+        th.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+        });
+      }
+      headRow.appendChild(th);
+      return th;
+    });
+    var thead = node("thead");
+    var tbody = node("tbody");
+    var wrap = node("div", "skip-table-wrap");
+    var pager = node("div", "skip-pager");
+    thead.appendChild(headRow);
+    tableEl.appendChild(thead);
+    tableEl.appendChild(tbody);
+    wrap.appendChild(tableEl);
+    root.appendChild(wrap);
+    if (pageSize) root.appendChild(pager);
+
+    function visibleRows() {
+      var rows = state.rows;
+      if (state.query) {
+        rows = rows.filter(function (row) {
+          return cols.some(function (col) { return cellText(col, row).toLowerCase().indexOf(state.query) >= 0; });
+        });
+      }
+      if (state.key) {
+        var key = state.key, dir = state.dir;
+        rows = rows.slice().sort(function (a, b) { return dir * compareValues(a[key], b[key]); });
+      }
+      return rows;
+    }
+
+    function drawRow(row) {
+      var tr = node("tr");
+      cols.forEach(function (col) {
+        var td = node("td", isNumberColumn(col) ? "num" : "");
+        if (!col.render) {
+          td.textContent = cellText(col, row);
+        } else {
+          var content = col.render(row[col.key], row);
+          if (content instanceof Node) td.appendChild(content);
+          else td.innerHTML = content == null ? "" : String(content);
+        }
+        tr.appendChild(td);
+      });
+      // The row stays a row (no role) and takes focus, so a keyboard reaches
+      // the same action; keys pressed on a control inside a cell are its own.
+      if (cfg.onRowClick) {
+        tr.style.cursor = "pointer";
+        tr.tabIndex = 0;
+        tr.addEventListener("click", function () { cfg.onRowClick(row); });
+        tr.addEventListener("keydown", function (e) {
+          if (e.target !== tr || (e.key !== "Enter" && e.key !== " ")) return;
+          e.preventDefault();
+          cfg.onRowClick(row);
+        });
+      }
+      return tr;
+    }
+
+    function pagerButton(label, disabled, step) {
+      var button = node("button", "btn", label);
+      button.type = "button";
+      button.setAttribute("data-variant", "outline");
+      button.setAttribute("data-size", "sm");
+      button.disabled = disabled;
+      button.addEventListener("click", function () { state.page += step; draw(); });
+      return button;
+    }
+
+    function draw() {
+      var rows = visibleRows();
+      heads.forEach(function (th, i) {
+        if (cols[i].key === state.key) th.setAttribute("aria-sort", state.dir > 0 ? "ascending" : "descending");
+        else th.removeAttribute("aria-sort");
+      });
+      var pages = pageSize ? Math.max(1, Math.ceil(rows.length / pageSize)) : 1;
+      state.page = Math.min(state.page, pages - 1);
+      var shown = pageSize ? rows.slice(state.page * pageSize, (state.page + 1) * pageSize) : rows;
+      tbody.innerHTML = "";
+      if (!shown.length) {
+        var empty = node("td", "skip-table-empty", cfg.empty || "Nenhum registro encontrado.");
+        empty.colSpan = cols.length;
+        tbody.appendChild(node("tr")).appendChild(empty);
+      }
+      shown.forEach(function (row) { tbody.appendChild(drawRow(row)); });
+      if (!pageSize) return;
+      pager.innerHTML = "";
+      var from = rows.length ? state.page * pageSize + 1 : 0;
+      pager.appendChild(node("span", "", from + "–" + Math.min(rows.length, (state.page + 1) * pageSize) + " de " + rows.length));
+      var nav = node("div", "row gap-2");
+      nav.appendChild(pagerButton("Anterior", state.page === 0, -1));
+      nav.appendChild(pagerButton("Próxima", state.page >= pages - 1, 1));
+      pager.appendChild(nav);
+    }
+
+    draw();
+    return {
+      setRows: function (rows) { state.rows = rows.slice(); draw(); },
+      rows: visibleRows
+    };
+  }
+
+  // kpis(el, [{label, value, format?, delta?, hint?}]) — KPI cards in a
+  // responsive grid; delta is a fraction (0.12 renders as ▲ 12%).
+  function kpis(target, items) {
+    var root = resolve(target);
+    root.innerHTML = "";
+    root.classList.add("shell-grid");
+    items.forEach(function (item) {
+      var card = node("div", "panel kpi");
+      card.appendChild(node("span", "kpi-label", item.label));
+      // Large money values go compact ("R$ 27,5 mi"): the full amount does
+      // not fit a KPI card at four per row.
+      var kpiFormat = item.format === "brl" && Math.abs(item.value) >= 1e6 ? fmt.brlCompact : (item.format ? coerceFormat(item.format) : null);
+      card.appendChild(node("span", "kpi-value", kpiFormat ? kpiFormat(item.value) : String(item.value)));
+      if (typeof item.delta === "number") {
+        var up = item.delta >= 0;
+        card.appendChild(node("span", "kpi-delta " + (up ? "up" : "down"), (up ? "▲ " : "▼ ") + fmt.pct(Math.abs(item.delta))));
+      }
+      if (item.hint) card.appendChild(node("span", "kpi-label", item.hint));
+      root.appendChild(card);
+    });
+  }
+
+  // badge(text, variant?) — a .badge node for table cells and lists;
+  // variant is "secondary" | "outline" | "destructive" (default: primary).
+  function badge(text, variant) {
+    var el = node("span", "badge", text);
+    if (variant) el.setAttribute("data-variant", variant);
+    return el;
+  }
+
+  // tabs(el) — wires one .tabs block: [role=tab] buttons inside
+  // [role=tablist], each with aria-controls naming its [role=tabpanel].
+  function tabs(target) {
+    var root = resolve(target);
+    var buttons = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+    function select(chosen) {
+      buttons.forEach(function (b) {
+        var on = b === chosen;
+        b.setAttribute("aria-selected", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+        var panel = document.getElementById(b.getAttribute("aria-controls"));
+        if (panel) panel.hidden = !on;
+      });
+    }
+    buttons.forEach(function (b, i) {
+      b.addEventListener("click", function () { select(b); });
+      b.addEventListener("keydown", function (e) {
+        var step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!step) return;
+        var next = buttons[(i + step + buttons.length) % buttons.length];
+        next.focus();
+        select(next);
+      });
+    });
+    select(buttons.filter(function (b) { return b.getAttribute("aria-selected") === "true"; })[0] || buttons[0]);
+  }
+
+  // toast(message, {type?: "success" | "error", title?, duration?}) — a
+  // .toast in a shared .toaster at the bottom of the page.
+  function toast(message, opts) {
+    opts = opts || {};
+    var toaster = document.querySelector(".toaster") || document.body.appendChild(node("div", "toaster"));
+    var item = node("div", "toast");
+    item.setAttribute("role", opts.type === "error" ? "alert" : "status");
+    item.setAttribute("aria-hidden", "true");
+    if (opts.type) item.setAttribute("data-type", opts.type);
+    var content = node("div", "toast-content");
+    var section = node("section");
+    if (opts.title) section.appendChild(node("h2", "", opts.title));
+    section.appendChild(node("p", "", message));
+    content.appendChild(section);
+    item.appendChild(content);
+    toaster.appendChild(item);
+    requestAnimationFrame(function () { item.setAttribute("aria-hidden", "false"); });
+    setTimeout(function () {
+      item.setAttribute("aria-hidden", "true");
+      setTimeout(function () { item.remove(); }, 400);
+    }, opts.duration || 3000);
+  }
+
+  // Dialogs are native <dialog class="dialog">: a [data-dialog-open="id"]
+  // anywhere opens one, a [data-dialog-close] inside closes it, and a click on
+  // its backdrop closes it too. Plain dialog.showModal()/close() still work.
+  document.addEventListener("click", function (e) {
+    var target = e.target;
+    if (!(target instanceof Element)) return;
+    var opener = target.closest("[data-dialog-open]");
+    if (opener) {
+      var dialog = document.getElementById(opener.getAttribute("data-dialog-open"));
+      if (dialog && dialog.showModal && !dialog.open) dialog.showModal();
+      return;
+    }
+    var closer = target.closest("[data-dialog-close]");
+    if (closer && closer.closest("dialog")) {
+      closer.closest("dialog").close();
+      return;
+    }
+    if (target.tagName === "DIALOG" && target.classList.contains("dialog") && target.open) target.close();
+  });
+
+  // store(key, fallback) — JSON state in localStorage that never throws (a
+  // private window or a full quota falls back to memory): {get, set, update}.
+  function store(key, fallback) {
+    var memory;
+    // Set while the last write did not reach localStorage: what is stored
+    // there is older than memory until a write goes through again.
+    var unsaved = false;
+    var initial = function () { return fallback === undefined ? undefined : JSON.parse(JSON.stringify(fallback)); };
+    function get() {
+      if (!unsaved) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (raw != null) return JSON.parse(raw);
+        } catch (e) { /* storage unavailable: memory below */ }
+      }
+      return memory !== undefined ? memory : initial();
+    }
+    function set(value) {
+      memory = value;
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        unsaved = false;
+      } catch (e) {
+        unsaved = true;
+      }
+      return value;
+    }
+    return { get: get, set: set, update: function (fn) { return set(fn(get())); } };
+  }
+
+  // mock — seeded random data, so a page asks for 90 days of numbers in one
+  // line instead of writing them out; the same seed gives the same data.
+  var FIRST = ["Ana", "Bruno", "Carla", "Diego", "Eduarda", "Felipe", "Gabriela", "Henrique", "Isabela", "João",
+    "Larissa", "Marcos", "Natália", "Otávio", "Paula", "Rafael", "Sofia", "Thiago", "Vanessa", "Lucas"];
+  var LAST = ["Silva", "Santos", "Oliveira", "Souza", "Pereira", "Costa", "Rodrigues", "Almeida", "Nascimento", "Lima",
+    "Araújo", "Fernandes", "Carvalho", "Gomes", "Martins", "Rocha", "Ribeiro", "Barbosa"];
+  var INITIALS = "ABCDEFGHIJLMNOPRSTV".split("");
+  var CITIES = ["São Paulo, SP", "Rio de Janeiro, RJ", "Belo Horizonte, MG", "Curitiba, PR", "Porto Alegre, RS",
+    "Salvador, BA", "Recife, PE", "Fortaleza, CE", "Brasília, DF", "Goiânia, GO", "Campinas, SP", "Florianópolis, SC",
+    "Manaus, AM", "Belém, PA", "Vitória, ES", "Natal, RN"];
+
+  function createMock(seed) {
+    var state = seed >>> 0;
+    var names = 0;
+    function random() {
+      state = (state + 0x6d2b79f5) >>> 0;
+      var t = state;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    }
+    function int(min, max) { return min + Math.floor(random() * (max - min + 1)); }
+    function pick(list) { return list[Math.floor(random() * list.length)]; }
+    var mock = {
+      seed: function (value) { state = value >>> 0; names = 0; return mock; },
+      random: random,
+      int: int,
+      float: function (min, max, decimals) {
+        var factor = Math.pow(10, decimals == null ? 2 : decimals);
+        return Math.round((min + random() * (max - min)) * factor) / factor;
+      },
+      pick: pick,
+      chance: function (p) { return random() < p; },
+      // There are 360 first/last pairs. A page that draws until the name is
+      // new (do { … } while (used.has(name))) froze the tab past them, so
+      // later draws widen the space: a second surname after 200 (6,480), a
+      // middle initial after 4,000.
+      name: function () {
+        names++;
+        var middle = names > 4000 ? pick(INITIALS) + ". " : "";
+        return pick(FIRST) + " " + middle + (names > 200 ? pick(LAST) + " " : "") + pick(LAST);
+      },
+      city: function () { return pick(CITIES); },
+      // series(n, {start, trend, noise, min, decimals}) — a walk: each value
+      // moves by trend (fraction per step) plus up to ±noise of itself.
+      series: function (n, opts) {
+        opts = opts || {};
+        var value = opts.start == null ? 100 : opts.start;
+        var factor = Math.pow(10, opts.decimals || 0);
+        var out = [];
+        for (var i = 0; i < n; i++) {
+          out.push(Math.max(opts.min == null ? 0 : opts.min, Math.round(value * factor) / factor));
+          value = value * (1 + (opts.trend || 0)) * (1 + (random() * 2 - 1) * (opts.noise == null ? 0.08 : opts.noise));
+        }
+        return out;
+      },
+      // dates(n, {end?, step?: "day" | "week" | "month"}) — ISO dates
+      // (YYYY-MM-DD), oldest first, ending at end (default: today).
+      dates: function (n, opts) {
+        opts = opts || {};
+        var end = opts.end ? new Date(opts.end) : new Date();
+        var out = [];
+        for (var i = n - 1; i >= 0; i--) {
+          var d = new Date(end.getTime());
+          if (opts.step === "month") d.setMonth(d.getMonth() - i);
+          else d.setDate(d.getDate() - i * (opts.step === "week" ? 7 : 1));
+          out.push(d.toISOString().slice(0, 10));
+        }
+        return out;
+      },
+      // rows(n, spec) — n objects; each spec value is a function(i), a list
+      // to pick from, or a constant.
+      rows: function (n, spec) {
+        var out = [];
+        for (var i = 0; i < n; i++) {
+          var row = {};
+          for (var key in spec) {
+            var value = spec[key];
+            row[key] = typeof value === "function" ? value(i) : Array.isArray(value) ? pick(value) : value;
+          }
+          out.push(row);
+        }
+        return out;
+      }
+    };
+    return mock;
+  }
+
+  window.skipShell = { fmt: fmt };
+  window.skipChart = { bar: bar, line: line, donut: donut };
+  window.skipUI = { table: table, kpis: kpis, badge: badge, tabs: tabs, toast: toast };
+  window.skipStore = store;
+  window.skipMock = createMock(20261022);
+})();
+
+</script>
+<style>
+:root {
+--accent: #22c55e;
+--accent-contrast: #052e16;
+}
+body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.tab-nav { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+.tab-btn {
+flex: 0 0 auto; border: 1px solid var(--border); background: var(--surface); color: var(--text);
+padding: 10px 16px; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 0.9rem;
+transition: transform .15s ease, background .15s ease;
+}
+.tab-btn:hover { transform: translateY(-1px); }
+.tab-btn[aria-selected="true"] { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); }
+.tab-btn:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, label:focus-within {
+outline: 3px solid var(--accent); outline-offset: 2px;
+}
+.view { display: none; }
+.view.active { display: block; animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.card-q { border: 1px solid var(--border); border-radius: 16px; background: var(--surface); padding: 20px; }
+.alt-btn {
+display: flex; width: 100%; text-align: left; gap: 12px; align-items: flex-start;
+padding: 14px 16px; border-radius: 12px; border: 2px solid var(--border);
+background: var(--bg); color: var(--text); cursor: pointer; font-size: 1rem; margin-bottom: 10px;
+transition: border-color .15s ease, background .15s ease, transform .1s ease;
+}
+.alt-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+.alt-letter {
+flex: 0 0 auto; width: 30px; height: 30px; border-radius: 8px; display: inline-flex;
+align-items: center; justify-content: center; font-weight: 700; background: var(--surface); border: 1px solid var(--border);
+}
+.alt-btn.correct { border-color: #16a34a; background: rgba(22,163,74,.18); color: var(--text); }
+.alt-btn.wrong { border-color: #dc2626; background: rgba(220,38,38,.18); color: var(--text); }
+.alt-btn.selected-pending { border-color: var(--accent); background: rgba(34,197,94,.12); }
+.explain {
+margin-top: 14px; padding: 14px 16px; border-radius: 12px; border-left: 4px solid var(--accent);
+background: var(--bg); line-height: 1.5; font-size: .95rem;
+}
+.explain.wrong-box { border-left-color: #dc2626; }
+.explain.correct-box { border-left-color: #16a34a; }
+.progress-track { height: 10px; border-radius: 999px; background: var(--border); overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width .3s ease; border-radius: 999px; }
+.pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .75rem; font-weight: 600; border: 1px solid var(--border); background: var(--bg); }
+.pill-warn { border-color: #d97706; color: #fbbf24; }
+.pill-ok { border-color: #16a34a; color: #86efac; }
+.pill-est { border-color: #6366f1; color: #c7d2fe; }
+.filters { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.chk { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: .95rem; }
+.grid-nav { display: grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); gap: 6px; }
+.gn {
+height: 42px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text);
+cursor: pointer; font-weight: 600; font-size: .9rem;
+}
+.gn.answered { background: rgba(34,197,94,.2); border-color: var(--accent); }
+.gn.doubt { box-shadow: inset 0 -4px 0 #f59e0b; }
+.gn.current { outline: 2px solid var(--accent); outline-offset: 1px; }
+.bar-row { display: grid; grid-template-columns: 110px 1fr 56px; gap: 10px; align-items: center; margin-bottom: 8px; font-size: .9rem; }
+.bar-track { height: 14px; background: var(--border); border-radius: 999px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--accent); border-radius: 999px; }
+.week { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 16px; margin-bottom: 12px; }
+.week.done { border-color: var(--accent); }
+.week ul { margin: 6px 0 6px 18px; padding: 0; font-size: .92rem; line-height: 1.5; }
+.weight-row { display: grid; grid-template-columns: 120px 1fr 48px; gap: 10px; align-items: center; margin-bottom: 6px; font-size: .9rem; }
+.theme-btn { border: 1px solid var(--border); background: var(--surface); color: var(--text); padding: 8px 12px; border-radius: 10px; cursor: pointer; }
+.hero { border-radius: 16px; padding: 22px; background: linear-gradient(135deg, rgba(34,197,94,.18), rgba(34,197,94,.04)); border: 1px solid var(--border); }
+.hero-val { font-size: 2.4rem; font-weight: 800; color: var(--accent-text); }
+.muted-sm { color: var(--text-muted); font-size: .85rem; }
+.footer-note { font-size: .8rem; color: var(--text-muted); margin-top: 24px; text-align: center; }
+.session-bar { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+.result-line { font-size: 1.1rem; font-weight: 700; }
+.wrong-item { border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 10px; background: var(--bg); }
+@media (max-width: 600px) {
+.bar-row { grid-template-columns: 90px 1fr 46px; }
+.hero-val { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+<div class="shell-container shell-section">
+<header class="row between" style="flex-wrap:wrap; gap:12px; margin-bottom:18px;">
+<div>
+<span class="eyebrow pill">Fatec · Vestibular 2026</span>
+<h1 class="text-2xl font-bold m-0" style="margin-top:8px;">Vestibular Fatec · Banco de Questões</h1>
+<p class="muted text-sm m-0">Treine por prova e matéria, faça simulados cronometrados e acompanhe seu progresso.</p>
+</div>
+<div class="row gap-2">
+<button class="theme-btn" id="themeToggle" type="button" aria-label="Alternar tema claro e escuro">☀️ Tema claro</button>
+</div>
+</header>
+
+<nav class="tab-nav" role="tablist" aria-label="Seções do app" style="margin-bottom:20px;">
+<button class="tab-btn" role="tab" data-tab="treinar" aria-selected="true">Treinar</button>
+<button class="tab-btn" role="tab" data-tab="simulado" aria-selected="false">Simulado</button>
+<button class="tab-btn" role="tab" data-tab="roteiro" aria-selected="false">Roteiro</button>
+<button class="tab-btn" role="tab" data-tab="desempenho" aria-selected="false">Desempenho</button>
+</nav>
+
+<!-- TREINAR -->
+<section id="view-treinar" class="view active" role="tabpanel">
+<div class="panel p-4" style="margin-bottom:16px;">
+<h2 class="text-lg font-bold m-0">Configurar treino</h2>
+<p class="muted-sm m-0" style="margin-bottom:12px;">Escolha a prova, a matéria e a quantidade de questões.</p>
+<div class="filters">
+<div class="field">
+<label for="fProva" class="text-sm">Prova</label>
+<select class="input" id="fProva">
+<option value="all">Todas as provas (238)</option>
+<option value="1">1º semestre 2026</option>
+<option value="2">2º semestre 2026</option>
+<option value="3">2º semestre 2025</option>
+<option value="4">2º semestre 2024</option>
+</select>
+</div>
+<div class="field">
+<label for="fMateria" class="text-sm">Matéria</label>
+<select class="input" id="fMateria"></select>
+</div>
+<div class="field">
+<label for="fQtd" class="text-sm">Quantidade</label>
+<select class="input" id="fQtd">
+<option value="10">10 questões</option>
+<option value="20">20 questões</option>
+<option value="30">30 questões</option>
+<option value="all">Todas</option>
+</select>
+</div>
+<div class="field">
+<label for="fModo" class="text-sm">Modo de correção</label>
+<select class="input" id="fModo">
+<option value="imediata">Resposta imediata</option>
+<option value="final">Corrigir no final</option>
+</select>
+</div>
+</div>
+<div class="row gap-3" style="margin-top:12px; flex-wrap:wrap;">
+<label class="chk"><input type="checkbox" id="fEmbaralhar"> Embaralhar alternativas</label>
+<button class="btn" type="button" id="btnIniciarTreino">Começar treino</button>
+<span class="muted-sm">Atalhos: A–E para escolher, Enter para próxima.</span>
+</div>
+</div>
+
+<div id="treinoArea"></div>
+</section>
+
+<!-- SIMULADO -->
+<section id="view-simulado" class="view" role="tabpanel">
+<div class="panel p-4" style="margin-bottom:16px;">
+<h2 class="text-lg font-bold m-0">Simulado de 60 questões</h2>
+<p class="muted-sm m-0" style="margin-bottom:12px;">Questões sorteadas entre as que têm gabarito confiável. Tempo: 5 horas.</p>
+<div class="shell-grid" style="margin-bottom:16px;">
+<div class="panel p-4"><h3 class="text-base font-bold m-0">Prova · 2º semestre 2025</h3><p class="muted-sm m-0">64 questões. Nota sobre 64.</p><button class="btn" type="button" id="btnProva2025">Fazer prova</button></div>
+<div class="panel p-4"><h3 class="text-base font-bold m-0">Prova · 2º semestre 2024</h3><p class="muted-sm m-0">54 questões. Nota sobre 54.</p><button class="btn" type="button" id="btnProva2024">Fazer prova</button></div>
+</div>
+<p class="muted-sm m-0" style="margin-bottom:12px;">A prova de 2025 tem 64 questões e a de 2024 tem 54 — o formato da Fatec mudou ao longo dos anos.</p>
+<div class="row gap-3" style="flex-wrap:wrap;">
+<button class="btn" type="button" id="btnNovoSimulado">Iniciar novo simulado</button>
+<span class="pill" id="simStatus">Não iniciado</span>
+</div>
+</div>
+<div id="simArea"></div>
+</section>
+
+<!-- ROTEIRO -->
+<section id="view-roteiro" class="view" role="tabpanel">
+<div class="panel p-4" style="margin-bottom:16px;">
+<h2 class="text-lg font-bold m-0">Cronograma de 10 semanas</h2>
+<p class="muted-sm m-0">Marque cada semana concluída. Seu progresso fica salvo neste navegador.</p>
+<div class="row gap-3" style="margin-top:12px; flex-wrap:wrap;">
+<span class="pill pill-ok" id="roteiroProgress">0 de 11 concluídas</span>
+<button class="btn" data-variant="ghost" type="button" id="btnResetRoteiro">Limpar progresso</button>
+</div>
+</div>
+<div id="roteiroList"></div>
+<div class="panel p-4" style="margin-top:16px;">
+<h3 class="text-base font-bold m-0">Peso das matérias na prova</h3>
+<p class="muted-sm m-0" style="margin-bottom:12px;">Distribuição aproximada por matéria.</p>
+<div id="pesoChart"></div>
+</div>
+<div class="panel p-4" style="margin-top:16px;">
+<h3 class="text-base font-bold m-0">Assuntos que mais caem</h3>
+<p class="muted-sm m-0" style="margin-bottom:10px;">Priorize estes temas na revisão.</p>
+<ol id="assuntosList" style="line-height:1.7; padding-left:20px; margin:0;"></ol>
+</div>
+</section>
+
+<!-- DESEMPENHO -->
+<section id="view-desempenho" class="view" role="tabpanel">
+<div id="kpiArea" style="margin-bottom:16px;"></div>
+<div class="panel p-4" style="margin-bottom:16px;">
+<h3 class="text-base font-bold m-0">Acertos por matéria</h3>
+<p class="muted-sm m-0" style="margin-bottom:12px;">Percentual de acerto em todas as questões respondidas.</p>
+<div id="barrasMateria"></div>
+</div>
+<div class="panel p-4" style="margin-bottom:16px;">
+<h3 class="text-base font-bold m-0">Histórico de simulados</h3>
+<p class="muted-sm m-0" style="margin-bottom:12px;">Notas dos simulados já corrigidos.</p>
+<div id="historicoSim"></div>
+</div>
+<div class="panel p-4">
+<div class="session-bar" style="margin-bottom:10px;">
+<div>
+<h3 class="text-base font-bold m-0">Questões erradas</h3>
+<p class="muted-sm m-0">Revise o que você errou e treine só os erros.</p>
+</div>
+<button class="btn" type="button" id="btnTreinarErros">Treinar só os erros</button>
+</div>
+<div id="listaErros"></div>
+</div>
+</section>
+
+<footer class="footer-note">
+Gabarito oficial da Fatec — Vestibular 2024, 2025 e 2026 · v1.0
+</footer>
+</div>
+
+<script>
+const QUESTOES = [{"id":"p1q01","p":1,"n":1,"m":"Biologia","q":"No sistema ABO há quatro grupos sanguíneos. O grupo AB possui antígenos A e B nas hemácias e nenhuma aglutinina no plasma; o grupo O não possui antígenos e tem anti-A e anti-B. Em um processo de transfusão, é correto afirmar que uma pessoa","a":["do grupo O pode receber sangue de qualquer outro grupo","do grupo AB pode receber sangue apenas de pessoas do grupo O","do grupo AB pode doar sangue apenas para pessoas do grupo AB","do grupo A pode doar sangue para pessoas do grupo B e do grupo AB","do grupo B pode receber sangue de pessoas do grupo O e do grupo AB"],"ok":"C","e":"Sem aglutininas, o AB só pode doar para AB. O grupo O é doador universal, não receptor universal."},
+{"id":"p1q02","p":1,"n":2,"m":"Biologia","q":"O ponto de compensação fótico (PCF) ocorre quando as taxas de fotossíntese e de respiração se igualam, sem excedente de matéria orgânica. Para crescer, a planta precisa de luz acima do seu PCF por algumas horas do dia. Se ficar abaixo do PCF por período prolongado, ela deverá","a":["continuar viva, mas morrerá após um tempo, porque consumirá mais matéria orgânica do que produz e não terá reservas suficientes","continuar viva, mas parará de crescer, porque produz menos matéria orgânica pela respiração do que a consumida pela fotossíntese","morrer rapidamente, porque perderá a capacidade de retirar do ambiente os nutrientes de que necessita","continuar viva e crescendo, porque retira do solo nutrientes, água e sais minerais","continuar viva e crescendo, porque produz mais matéria orgânica pela fotossíntese do que a consumida pela respiração"],"ok":"A","e":"Abaixo do PCF a respiração supera a fotossíntese: a planta consome reservas até morrer."},
+{"id":"p1q03","p":1,"n":3,"m":"Biologia","q":"[Questão com heredograma no caderno original] A análise do heredograma permite concluir corretamente que","a":["o indivíduo 3 só pode ser homozigoto","os indivíduos 1 e 2 são heterozigotos","a anomalia é autossômica dominante","os indivíduos com a anomalia são obrigatoriamente heterozigotos","os indivíduos sem a anomalia são obrigatoriamente heterozigotos"],"ok":null,"e":"Depende da leitura do heredograma da prova original."},
+{"id":"p1q04","p":1,"n":4,"m":"Biologia","q":"Verminoses são transmitidas pela via fecal-oral, quando ovos de parasitas nas fezes chegam à boca de outra pessoa por água ou alimentos contaminados ou por mãos sujas. Um tipo de verminose transmitida dessa forma é","a":["a esquistossomose","a leptospirose","a ascaridíase","a teníase","a filariose"],"ok":"C","e":"A ascaridíase (Ascaris lumbricoides) tem transmissão fecal-oral por água e alimentos contaminados."},
+{"id":"p1q05","p":1,"n":5,"m":"Biologia","q":"O Brasil abriga serpentes, abelhas Apis, aranhas, escorpiões e outros animais peçonhentos, cujas picadas podem trazer graves consequências. Sobre esses animais, é correto afirmar que","a":["atuam como parasitas nos seres humanos e nos animais domesticados, causando doenças, alergias e dor","possuem esqueleto externo quitinoso, rígido e resistente, trocado periodicamente para crescer","os escorpiões, as aranhas e as abelhas são insetos importantes como consumidores primários","as serpentes possuem quelíceras inoculadoras de veneno na região bucal","o escorpião usa o ferrão na ponta da cauda para injetar o veneno, provocando dor e necessidade de atendimento médico"],"ok":"E","e":"O escorpião inocula o veneno pelo télson (ferrão) na ponta da cauda. Aranhas e escorpiões não são insetos."},
+{"id":"p1q06","p":1,"n":6,"m":"Biologia","q":"A insulina sintética é produzida por bactérias como a Escherichia coli por meio da tecnologia do DNA recombinante, que as transforma em fábricas da proteína. Entre as características dessa tecnologia, destaca-se","a":["o grande avanço na cura dos pacientes diabéticos por meio da produção de vacinas","a produção de proteínas humanas pela técnica do DNA recombinante utilizando organismos pluricelulares, como bactérias","a criação da insulina sintética idêntica à produzida pelo pâncreas para o tratamento de pacientes diabéticos","a produção de insulina sintética que aumenta o risco de infecções e reações imunológicas adversas","a inserção de genes humanos mutantes em animais que passam a produzir proteínas humanas"],"ok":"C","e":"A insulina recombinante é idêntica à humana, o que reduz reações imunológicas. Bactérias são unicelulares."},
+{"id":"p1q07","p":1,"n":7,"m":"Física","q":"A placa de dados técnicos de uma escova secadora indica 127 V, 1 270 W e 60 Hz. Desprezando perdas de energia, é correto afirmar que","a":["a corrente elétrica nominal de operação é de 10 A","127 V equivale à potência nominal útil de operação","1 270 W corresponde à ddp máxima aplicada à escova","60 Hz equivale à frequência de rotação da escova secadora","a temperatura ambiente para uso deve estar entre 25 ºC e 150 ºC"],"ok":"A","e":"i = P/U = 1270/127 = 10 A."},
+{"id":"p1q08","p":1,"n":8,"m":"Física","q":"O grooving cria ranhuras transversais em superfícies de concreto para aumentar a tração e facilitar a drenagem, sendo útil em rodovias e pistas de pouso. Com base nisso, é correto afirmar que","a":["o grooving permite a ação de uma maior força de atrito entre o pneu e o piso","não há coeficiente de atrito estático ou dinâmico entre a água e a borracha do pneu","as ranhuras permitem o acúmulo de água e, consequentemente, maior segurança","a hidroplanagem faz aumentar a força de atrito entre a água e o pneu","a drenagem provocada pelo grooving aumenta a chance de derrapagem do avião ao pousar"],"ok":"A","e":"Ranhuras escoam a água e permitem contato direto pneu-piso, aumentando o atrito."},
+{"id":"p1q09","p":1,"n":9,"m":"Física","q":"Leitores ópticos de código de barras usam um LED que emite luz vermelha ou infravermelha, refletida de forma diferente pelas barras e captada por um fotodiodo que a converte em corrente elétrica, amplificada e transformada em sinal digital. Com base nisso, é correto afirmar que","a":["as barras pretas refletem a luz recebida e as brancas a absorvem","a luz infravermelha é absorvida pelo ar antes de chegar às barras","o algoritmo do processador define a sequência em que as barras serão impressas","a corrente elétrica estabelecida pelo decodificador é provocada pelos sinais digitais 0 e 1","a energia captada pelos leitores ópticos origina-se de ondas eletromagnéticas transversais"],"ok":"E","e":"A luz é onda eletromagnética transversal; a corrente vem do fotodiodo que recebe a luz refletida."},
+{"id":"p1q10","p":1,"n":10,"m":"Física","q":"Um leitor emite laser no infravermelho com c = 3,0×10^8 m/s e λ = 1 000 nm (1 000×10^-9 m). Sendo c = λf, a ordem de grandeza da frequência f, em Hz, é","a":["10^16","10^14","10^12","10^10","10^8"],"ok":"B","e":"f = 3,0×10^8 / 1,0×10^-6 = 3,0×10^14 Hz."},
+{"id":"p1q11","p":1,"n":11,"m":"Física","q":"Uma bailarina salta sobre o cabo de uma colher para lançar um cubo de açúcar, na outra extremidade, dentro de uma caneca. No instante em que ela atinge o cabo, o açúcar é lançado. Desprezando a resistência do ar, é correto afirmar que","a":["a força horizontal de reação da bailarina sobre o cubo será diferente de zero","o cubo de açúcar traçará uma trajetória horizontal e retilínea","a bailarina deixará de sofrer ação da força gravitacional","uma força vertical para baixo sobre o cubo o impulsionará para cima","o cubo de açúcar atingirá a caneca descrevendo uma trajetória parabólica"],"ok":"E","e":"Após o lançamento atuam apenas gravidade (vertical) e velocidade inicial horizontal: trajetória parabólica."},
+{"id":"p1q12","p":1,"n":12,"m":"Física","q":"Terras-raras são 17 elementos químicos; entre eles o neodímio (Nd) que, associado ao ferro e ao boro, forma uma liga que se torna um poderoso ímã permanente. Sobre esse ímã, é correto afirmar que","a":["a utilização do neodímio é opcional na construção da liga magnética","é encontrado diretamente na natureza e é responsável pelo campo geomagnético","possui um monopolo magnético com orientação única, apenas N ou apenas S","gera um intenso campo magnético com linhas de campo orientadas do polo norte para o polo sul na região externa ao ímã","gera um fraco campo magnético interno com linhas de campo orientadas do leste para o oeste"],"ok":"D","e":"Fora do ímã as linhas de campo vão do polo norte ao polo sul; não existem monopolos magnéticos."},
+{"id":"p1q13","p":1,"n":13,"m":"História","q":"A Guerra Fria (1947-1991) foi um conflito político-ideológico entre EUA e URSS, que polarizou o mundo em dois blocos: capitalista e socialista. Nesse período, os Estados Unidos","a":["lançaram o primeiro ser humano ao espaço, iniciando a Corrida Espacial","lançaram a primeira bomba atômica sobre o continente europeu, provocando a Corrida Armamentista","lançaram um plano de assistência econômica para os países europeus devastados pela Segunda Guerra, o Plano Marshall","criaram o Pacto de Varsóvia, aliança militar dos países capitalistas, para fazer frente à OTAN","criaram o COMECON para respaldar tecnicamente os países da Europa Oriental destruídos na Primeira Guerra"],"ok":"C","e":"O Plano Marshall (1947) foi o programa norte-americano de reconstrução da Europa. Pacto de Varsóvia e COMECON eram soviéticos."},
+{"id":"p1q14","p":1,"n":14,"m":"Geografia","q":"O intemperismo desagrega e decompõe rochas: o físico ocorre por variações de temperatura e pressão; o químico, pela ação da água líquida em reações com as rochas. Com base nisso, é correto afirmar que o intemperismo","a":["físico predomina na floresta do Congo, na África","físico predomina na região do Sahel, no continente africano","químico predomina nas regiões polares da Terra","químico predomina no domínio da caatinga brasileira","químico predomina no deserto do Atacama, no norte do Chile"],"ok":"B","e":"O físico predomina em climas secos com grande amplitude térmica, como o Sahel; o químico exige umidade."},
+{"id":"p1q15","p":1,"n":15,"m":"Geografia","q":"Quando o vapor d'água na atmosfera atinge a saturação, ocorrem as chuvas. As chuvas ______ ocorrem quando o ar úmido é forçado a se elevar ao cruzar montanhas, formando nuvens densas. Assinale a alternativa que completa a lacuna.","a":["ácidas","saraivas","frontais","convectivas","orográficas"],"ok":"E","e":"Chuvas orográficas (de relevo) resultam da ascensão forçada do ar por barreiras de relevo."},
+{"id":"p1q16","p":1,"n":16,"m":"Geografia","q":"Segundo o IBGE, favelas e comunidades urbanas são territórios populares originados de estratégias da própria população para atender suas necessidades de moradia. A existência desses territórios no Brasil está vinculada à","a":["incongruência das leis de planejamento urbano, que não permitem moradias populares nas metrópoles","incoerência no modelo de ocupação territorial urbana, que inibe a construção em morros e fundos de vale","inexistência de residências desocupadas nas grandes cidades, gerando escassez de imóveis para baixa renda","insistência do poder público em proibir a verticalização destinada à moradia nas regiões centrais","insuficiência de políticas públicas e de investimentos privados dirigidos à garantia do direito à cidade"],"ok":"E","e":"A autoconstrução surge da falta de políticas habitacionais e de investimento urbano, não da proibição legal."},
+{"id":"p1q17","p":1,"n":17,"m":"Geografia","q":"A população brasileira era de 213,4 milhões de habitantes em 1º de julho de 2025, alta de 0,39% em relação ao ano anterior. Com base no texto, é correto afirmar que a população brasileira está","a":["crescendo rapidamente, pois a taxa de natalidade está em curva acelerada","crescendo, porém em ritmo cada vez mais lento, pois a taxa de fecundidade tem diminuído","crescendo mais do que o esperado, pelo aumento significativo da taxa de crescimento vegetativo","crescendo de maneira bastante lenta, pois a taxa de fertilidade está em ascensão contínua desde 2010","crescendo exponencialmente, já que a queda da mortalidade fez a natalidade aumentar"],"ok":"B","e":"O crescimento de 0,39% ao ano é lento: a fecundidade brasileira está abaixo do nível de reposição."},
+{"id":"p1q18","p":1,"n":18,"m":"Geografia","q":"Negacionismo climático é toda manifestação contrária ao aquecimento global provocado pelo aumento das emissões antrópicas. O negacionismo climático desconsidera evidências científicas comprovadas, como","a":["a compreensão de que as ações humanas não acarretam o aquecimento global","o fato de que a temperatura média global tem aumentado, sendo a última década a mais quente já registrada","a tese de que, em menos de cem anos, a Terra passará por uma nova Era do Gelo","o entendimento de que a humanidade se adapta a quaisquer mudanças e a ciência já sabe resfriar a Terra","a certeza de que os gases de efeito estufa não são responsáveis pelo aquecimento e sua produção diminui desde 1990"],"ok":"B","e":"A única alternativa com dado científico real é o aumento da temperatura média global e a década mais quente já registrada."},
+{"id":"p1q19","p":1,"n":19,"m":"História","q":"No período helenístico, Eratóstenes calculou a circunferência da Terra em Alexandria usando a diferença de ângulos das sombras em duas cidades e a distância entre elas. O cálculo de Eratóstenes","a":["levou à descoberta de um novo continente, a América, séculos antes das Grandes Navegações","baseava-se em mitos e narrativas religiosas sobre a criação do mundo","foi encomendado pelo imperador romano Júlio César para melhorar os mapas de suas legiões","provou que todo o conhecimento científico deveria ser produzido na Grécia","fortaleceu a teoria de que a Terra é geodésica, e não plana, revolucionando a Geografia e a Astronomia"],"ok":"E","e":"O método geométrico de Eratóstenes comprovou a esfericidade da Terra e estimou sua circunferência."},
+{"id":"p1q20","p":1,"n":20,"m":"História","q":"Savery patenteou o primeiro motor a vapor (1698), Newcomen o aperfeiçoou (1712) e James Watt criou o condensador na década de 1760, resfriando o vapor fora do cilindro e tornando o motor mais eficiente e econômico em carvão. Assinale a alternativa que explica corretamente as consequências desse aperfeiçoamento.","a":["A invenção de Watt popularizou a energia elétrica, que substituiu o carvão no século XVIII","A máquina de Watt era menos eficiente e potente que a de Newcomen, mas mais barata","A criação de Watt foi a primeira máquina a vapor da história e não se baseou em máquinas preexistentes","A inovação de Watt, ao aumentar a eficiência energética, tornou a máquina a vapor economicamente viável e impulsionou a Revolução Industrial","A intenção de Watt era substituir o carvão pela energia hidráulica, tornando o motor sustentável"],"ok":"D","e":"O condensador separado aumentou a eficiência e viabilizou economicamente a máquina a vapor, motor da industrialização."},
+{"id":"p1q21","p":1,"n":21,"m":"História","q":"A Belle Époque foi marcada por descobertas científicas e inovações como a lâmpada elétrica, o telefone, o gramofone e o automóvel, que modernizaram casas, aceleraram comunicações e redefiniram hábitos de consumo. Esses avanços tecnológicos","a":["eliminaram os espetáculos públicos, pois as famílias se isolaram em casa","aceleraram o ritmo de vida, modernizaram os lares das elites e criaram uma cultura urbana de consumo e entretenimento","provocaram uma volta ao passado, com rejeição das inovações e valorização da arte medieval","tornaram-se acessíveis a toda a população, eliminando as diferenças sociais","foram dominados pela aristocracia rural, que controlava a produção das novas tecnologias"],"ok":"B","e":"As novidades tecnológicas ficaram restritas às elites, mas criaram a cultura urbana de consumo e lazer."},
+{"id":"p1q22","p":1,"n":22,"m":"História","q":"Na Guerra Fria, EUA e URSS não se enfrentaram diretamente: a disputa ocorreu em conflitos regionais ou guerras por procuração, apoiando lados opostos com armamentos, dinheiro e assessores. O papel da tecnologia nesses conflitos foi","a":["as superpotências forneceram tecnologias e armamentos a seus aliados, usando os conflitos regionais para testar doutrinas e equipamentos militares","o uso de tecnologia foi irrelevante, pois a vitória era decidida pelo número de soldados","a tecnologia militar utilizada era obsoleta, pois havia medo de uma guerra nuclear total","a bomba atômica foi lançada por ambos os lados em várias batalhas para forçar a rendição","EUA e URSS enviaram tropas próprias para lutar diretamente um contra o outro no Vietnã e na Coreia"],"ok":"A","e":"As guerras por procuração eram também laboratórios de armas e doutrinas militares das superpotências."},
+{"id":"p1q23","p":1,"n":23,"m":"História","q":"Os indígenas brasileiros desenvolveram técnicas de manejo como a coivara: derruba-se pequeno trecho de mata, deixa-se secar, coloca-se fogo, limpam-se os restos e plantam-se várias espécies juntas; após alguns anos a roça é abandonada e a floresta volta a crescer. Segundo o texto, essa prática","a":["foi responsável pelo desmatamento de grandes áreas da Mata Atlântica já no século XVI","é primitiva e insustentável, pois o fogo causa desertificação e impede a regeneração","utiliza o fogo de forma controlada e permite a regeneração natural do solo, o que minimiza os impactos ambientais","foi copiada dos portugueses, que já praticavam queimadas em larga escala na Europa","tinha finalidade ritualística religiosa, sem objetivo de produção de alimentos"],"ok":"C","e":"A coivara usa fogo controlado em áreas pequenas, com pousio e regeneração florestal."},
+{"id":"p1q24","p":1,"n":24,"m":"História","q":"Na Era Vargas, o Estado interveio na economia e criou a CSN (siderurgia), o Conselho Nacional do Petróleo e o CNPq (ciência e tecnologia). Ao adotar tais medidas, Vargas pretendia","a":["isolar o Brasil tecnologicamente do resto do mundo, proibindo importações","reduzir a presença do Estado na economia para incentivar a livre iniciativa","focar exclusivamente na agricultura de exportação, modernizando o cultivo do café","privatizar empresas estatais para atrair capital estrangeiro","promover a substituição de importações e fortalecer a base industrial e tecnológica nacional, com o Estado como planejador e investidor"],"ok":"E","e":"A política varguista foi de industrialização por substituição de importações, com forte papel estatal."},
+{"id":"p1q25","p":1,"n":25,"m":"Biologia","q":"[Questão baseada em quadrinho] Os pepinos acreditam que seu amigo, ao sair da piscina, está","a":["cansado devido à alta temperatura da água","inchado devido ao ácido acético","desidratado devido à água salinizada","nauseado devido à água ionizada","fraco devido à água dessalinizada"],"ok":"B","est":true,"e":"Gabarito estimado: em meio hipotônico a célula vegetal absorve água por osmose e fica turgida (inchada)."},
+{"id":"p1q26","p":1,"n":26,"m":"Inglês","q":"No quadrinho, a ocorrência do verbo must expressa","a":["dedução","permissão","habilidade","obrigação","conselho"],"ok":"A","e":"Must seguido de suposição sobre algo que está acontecendo expressa dedução (must be = deve estar)."},
+{"id":"p1q27","p":1,"n":27,"m":"Inglês","q":"Na tirinha, a menina afirma: 'Yes, Sir… independent, very independent, creative, strong, and… fearless!'. De acordo com a garota, pressupõe-se que uma mulher é","a":["independente, sincera e dócil","criativa, independente e forte","sincera, audaciosa e frágil","audaciosa, teimosa e criativa","forte, dócil e teimosa"],"ok":"B","e":"A fala enumera exatamente independent, creative, strong (e fearless)."},
+{"id":"p1q28","p":1,"n":28,"m":"Inglês","q":"Brazil is an example of a country with a thriving electronic voting system. In 2000, it became the first country to have elections completely by an electronic voting system and has since remained at the forefront of the electronic voting movement. Segundo o texto, a urna eletrônica brasileira representa um caso de","a":["disputas demoradas em países emergentes","inovação em países subdesenvolvidos","atraso para um sistema democrático","vanguarda no cenário eleitoral","risco em eleições federais"],"ok":"D","e":"'At the forefront' corresponde a vanguarda no cenário eleitoral."},
+{"id":"p1q29","p":1,"n":29,"m":"Inglês","q":"Na letra de Rocket man: 'Mars ain't the kind of place to raise your kids / In fact, it's cold as hell'. A expressão in fact reforça que","a":["Marte não pode ser nosso lar, portanto não poderemos criar nossos filhos lá","Marte poderia, de fato, ser um substituto para o planeta Terra","Marte, no entanto, traz boas perspectivas para moradia","Marte, apesar de frio, será nossa alternativa de lar","Marte, na verdade, é frio demais para nos abrigar"],"ok":"E","e":"'In fact, it's cold as hell' reforça a razão pela qual Marte não serve para criar filhos: o frio extremo."},
+{"id":"p1q30","p":1,"n":30,"m":"Inglês","q":"A música de Elton John foi composta em 1972 e refere-se ao desenvolvimento da","a":["clonagem de seres humanos","inteligência artificial","engenharia genética","exploração espacial","internet"],"ok":"D","e":"Rocket Man trata de um astronauta em viagem espacial: era da exploração espacial."},
+{"id":"p1q31","p":1,"n":31,"m":"Matemática","q":"As placas Mercosul seguem o formato LLL NL NN, com L letra (26 letras) e N algarismo (0 a 9). Quantas placas diferentes podem ser formadas utilizando apenas as vogais do alfabeto romano?","a":["125 000 placas","200 000 placas","456 976 placas","625 000 placas","676 000 placas"],"ok":"A","e":"5 vogais em 3 posições e 10 algarismos em 3 posições: 5³ × 10³ = 125 000."},
+{"id":"p1q32","p":1,"n":32,"m":"Matemática","q":"A maior roda-gigante da América Latina, em São Paulo, tem 80 metros de diâmetro. O comprimento, em metros, de uma circunferência com esse diâmetro é de","a":["80π","160π","320π","3 200π","6 400π"],"ok":"A","e":"C = π·d = 80π."},
+{"id":"p1q33","p":1,"n":33,"m":"Matemática","q":"A altura de uma cabine da roda-gigante de 80 m de diâmetro é dada por uma função h(t) periódica, com t em minutos desde o ponto mais baixo. A maior altura atingida e o instante em que isso ocorre pela primeira vez são","a":["91 metros e 30 minutos","91 metros e 15 minutos","51 metros e 30 minutos","51 metros e 15 minutos","11 metros e 30 minutos"],"ok":"B","e":"Com diâmetro 80 m a altura máxima é 91 m (centro a 51 m), atingida na metade de uma volta: 15 min."},
+{"id":"p1q34","p":1,"n":34,"m":"Matemática","q":"O pH de uma solução é dado por pH = –log[H+]. Adotando log 2 = 0,3, uma solução com [H+] = 2 × 10^-7 mol/L terá pH igual a","a":["2,5","4,6","6,7","8,3","9,7"],"ok":"C","e":"pH = –(log 2 – 7) = 7 – 0,3 = 6,7."},
+{"id":"p1q35","p":1,"n":35,"m":"Matemática","q":"Um provedor pretende instalar 50 km de cabos no primeiro ano e, a cada ano, 15 km a mais que no ano anterior. Mantido o padrão, a quantidade instalada no décimo ano será de","a":["125 km","155 km","185 km","215 km","245 km"],"ok":"C","e":"PA: a10 = 50 + 9 × 15 = 185 km."},
+{"id":"p1q36","p":1,"n":36,"m":"Matemática","q":"O crescimento de uma cultura bacteriana segue N(t) = N0·2^(t/g), com t em minutos e g o tempo de geração. Em um experimento, após 45 minutos a população chegou a 8 000 bactérias a partir de 1 000. O tempo de geração g é de","a":["15 minutos","18 minutos","20 minutos","22 minutos","25 minutos"],"ok":"A","e":"8 000 = 1 000·2^(45/g) → 2³ = 2^(45/g) → g = 15 min."},
+{"id":"p1q37","p":1,"n":37,"m":"Matemática","q":"[Questão com matrizes no caderno original] Uma imagem é armazenada como matriz A de números de 0 a 255. Um filtro multiplica cada número da matriz A por um fator, gerando a matriz S. Sobre o número que ocupa a linha 2 e a coluna 3 da matriz S, é correto afirmar que ele é igual a","a":["15","25","42","79","84"],"ok":null,"e":"Depende dos valores da matriz A e do fator dados na prova original."},
+{"id":"p1q38","p":1,"n":38,"m":"Matemática","q":"Um drone parte de A e percorre 20 km em trajetória retilínea formando ângulo θ com o solo, atingindo a altura h. Adotando cos θ = 0,6 e sen θ = 0,8, o valor de h, em km, é","a":["10","12","15","16","20"],"ok":"D","e":"h = 20 × sen θ = 20 × 0,8 = 16 km."},
+{"id":"p1q39","p":1,"n":39,"m":"Inglês","q":"A distância média de Plutão ao Sol é de aproximadamente 5,9 × 10^9 km; a estrela mais próxima está cerca de 7 000 vezes mais longe que Plutão. Isso faz com que ela esteja a aproximadamente ____ km, o que justifica a ideia de encontrar extraterrestres ser ____ entre a maioria dos cientistas.","a":["4,1×10^10 — muito popular","4,1×10^13 — muito popular","4,1×10^9 — pouco popular","4,1×10^10 — pouco popular","4,1×10^13 — pouco popular"],"ok":"E","e":"5,9×10^9 × 7 000 ≈ 4,1×10^13 km, e a ideia é pouco popular entre cientistas."},
+{"id":"p1q40","p":1,"n":40,"m":"Química","q":"Pesquisadores removeram micro e nanoplásticos da água com nanopartículas magnéticas modificadas com polidopamina, que aderem aos fragmentos de plástico, permitindo removê-los com um ímã. O processo de separação de misturas utilizado é","a":["filtração","catação","decantação","destilação simples","separação magnética"],"ok":"E","e":"O ímã atrai as partículas magnéticas com o plástico aderido: separação magnética."},
+{"id":"p1q41","p":1,"n":41,"m":"Química","q":"[Questão com fórmulas estruturais no caderno original] PFAS são compostos perfluoroalquilados, formados pela substituição dos hidrogênios da cadeia carbônica pelo elemento mais eletronegativo. A porcentagem em massa de carbono do composto que pertence ao grupo dos PFAS é aproximadamente","a":["11,5","22,4","34,9","41,1","56,3"],"ok":null,"e":"Depende das fórmulas estruturais apresentadas na prova original."},
+{"id":"p1q42","p":1,"n":42,"m":"Química","q":"Meia-vida é o tempo para a quantidade de um reagente cair à metade. Um indivíduo ingeriu água com 200 mg de PFOA e, após 12 anos, foram encontrados 12,5 mg em seu organismo. O tempo de meia-vida do PFOA é de","a":["1 ano","2 anos","3 anos","4 anos","5 anos"],"ok":"C","e":"200→100→50→25→12,5: quatro meias-vidas em 12 anos, logo 3 anos cada."},
+{"id":"p1q43","p":1,"n":43,"m":"Química","q":"O cloreto de potássio (KCl) do sal light é um composto inorgânico semelhante ao cloreto de sódio (NaCl). Uma semelhança entre esses compostos ocorre","a":["na classificação como macronutrientes, já que ambos são carboidratos","na classificação como macronutrientes, já que ambos são proteínas","na classificação como macronutrientes, já que ambos são lipídeos","na ligação química, já que ambos apresentam ligações iônicas","na ligação química, já que ambos apresentam ligações covalentes"],"ok":"D","e":"Metal + ametal formam ligação iônica; KCl e NaCl são compostos iônicos."},
+{"id":"p1q44","p":1,"n":44,"m":"Química","q":"Na degradação do PET são liberados ácido tereftálico e etano-1,2-diol. O nome da função orgânica do etano-1,2-diol e a fórmula molecular do ácido tereftálico são, respectivamente,","a":["álcool e C2H6O2","álcool e C2H2O4","álcool e C8H6O4","aldeído e C8H6O4","aldeído e C2H2O4"],"ok":"C","e":"Etano-1,2-diol tem duas hidroxilas em carbonos saturados (álcool); o ácido tereftálico é C8H6O4."},
+{"id":"p1q45","p":1,"n":45,"m":"Química","q":"Na bateria de íons-lítio, o cobaltato de lítio (LiCoO2) é o cátodo e a grafite litiada é o ânodo. Ao conectar a bateria a um dispositivo, elétrons passam pelo circuito externo do polo negativo ao positivo e cátions fluem espontaneamente para o cátodo. As espécies X (circuito externo) e T (interior) são, respectivamente,","a":["elétrons e íons Li+","elétrons e íons O2-","elétrons e íons Co2+","íons Li+ e elétrons","íons Co2+ e elétrons"],"ok":"A","e":"Pelo circuito externo fluem elétrons; no eletrólito migram cátions Li+ para o cátodo."},
+{"id":"p1q46","p":1,"n":46,"m":"Matemática","q":"Uma canção de baleia, de duração máxima de 30 minutos, é composta pelo encadeamento sequencial do Tema 2 e do Tema 3, com unidades de 6s, 4s, 1s, 8s, 5s, 3s e 2s. A quantidade de vezes que cada tema se repetirá completamente nessa canção é","a":["20","40","60","90","120"],"ok":"C","est":true,"e":"Gabarito estimado: 1 800 s divididos pelo ciclo dos dois temas resultam em 60 repetições completas."},
+{"id":"p1q47","p":1,"n":47,"m":"Português","q":"A construção de uma música é feita a partir de blocos sonoros. Ao ordená-los conforme sua complexidade, obtemos a sequência","a":["Frase → Unidade → Tema → Música","Unidade → Tema → Música → Frase","Música → Tema → Frase → Unidade","Unidade → Frase → Tema → Música","Tema → Frase → Música → Unidade"],"ok":"D","e":"A hierarquia cresce da menor unidade sonora (unidade) até o conjunto (música): unidade → frase → tema → música."},
+{"id":"p1q48","p":1,"n":48,"m":"Matemática","q":"[Questão com figuras no caderno original] Considerando que o Tema 4 se repita indefinidamente, a unidade que ocupa a posição correspondente ao ano de lançamento do LP (1970) deve ser","a":["figura A","figura B","figura C","figura D","figura E"],"ok":null,"e":"Depende das figuras e da quantidade de unidades do Tema 4 na prova original."},
+{"id":"p1q49","p":1,"n":49,"m":"Matemática","q":"Quatro hospitais têm 850, 530, 490 e 450 doses de um antibiótico. O hospital A transferirá doses aos outros três até que todos fiquem com a mesma quantidade, sem perdas. Após as transferências, é correto afirmar que existe um hospital que","a":["ganhou 90 doses","perdeu 130 doses","ganhou 270 doses","perdeu 280 doses","ganhou 580 doses"],"ok":"A","e":"Total 2 320 ÷ 4 = 580 por hospital: o de 490 ganha 90 doses."},
+{"id":"p1q50","p":1,"n":50,"m":"Lógica","q":"Considere: (1) todas as filhas de Rose são pesquisadoras; (2) todas as filhas de Alfredo não são pesquisadoras. A dedução lógica correta é","a":["nenhuma das filhas de Rose é pesquisadora","existe uma pesquisadora que é filha de Alfredo","nenhuma pesquisadora é filha de Rose","existe uma filha de Rose que é filha de Alfredo","nenhuma das filhas de Alfredo é filha de Rose"],"ok":"E","e":"Se alguém fosse filha de ambos, seria simultaneamente pesquisadora e não pesquisadora: impossível."},
+{"id":"p1q51","p":1,"n":51,"m":"Lógica","q":"Simon Lake (EUA) projetou submarinos; Konstantin Tsiolkovsky (Rússia, capital Moscou) foi pioneiro da astronáutica; Santos Dumont nasceu no Brasil. Sabe-se que: (I) um deles projetou submarinos e nasceu em país do Hemisfério Ocidental; (II) só um foi pioneiro da astronáutica e nasceu em país cuja capital tem 6 letras; (III) o único nascido em país do Hemisfério Sul não projetou submarinos. A associação correta é","a":["Lake foi pioneiro da astronáutica e dos foguetes modernos","Lake projetou, construiu e pilotou aeronaves motorizadas","Dumont projetou alguns dos primeiros submarinos","Tsiolkovsky projetou alguns dos primeiros submarinos","Tsiolkovsky foi um pioneiro da astronáutica e dos foguetes modernos"],"ok":"E","e":"Moscou tem 6 letras e Tsiolkovsky é o pioneiro da astronáutica; Lake projetou submarinos."},
+{"id":"p1q52","p":1,"n":52,"m":"Português","q":"[Questão baseada em tirinha] Na tirinha, o autor se vale de uma comparação para","a":["evidenciar a maneira correta de divulgar informações sobre cuidados com os animais","questionar a subjetividade dos conceitos de verdade e de mentira na sociedade atual","criticar a falta de discernimento dos indivíduos facilmente atraídos por brindes","esclarecer os métodos eficazes de comunicação entre os pets e seus tutores","explicar como ocorre o fenômeno da disseminação de informações falsas"],"ok":null,"e":"Depende da leitura da tirinha da prova original."},
+{"id":"p1q53","p":1,"n":53,"m":"Português","q":"[Questão baseada em tirinha] Assinale o provérbio que expressa de forma concisa a ideia apresentada na tirinha.","a":["Cara de mel, coração de fel","Quem não arrisca, não petisca","Casa de ferreiro, espeto de pau","Em boca fechada não entra mosca","De grão em grão, a galinha enche o papo"],"ok":null,"e":"Depende da leitura da tirinha da prova original."},
+{"id":"p1q54","p":1,"n":54,"m":"Português","q":"Na frase 'É uma pena que elas apenas dão o oxigênio que respiramos', ocorre a figura de linguagem chamada","a":["ironia","anáfora","eufemismo","catacrese","onomatopeia"],"ok":"A","e":"A frase diz o contrário do que se quer expressar: ironia."},
+{"id":"p1q55","p":1,"n":55,"m":"Português","q":"O meme apresentado, além de gerar humor, cumpre também a finalidade de","a":["conscientizar as pessoas sobre tópicos importantes para a sociedade","convencer as pessoas a consumirem determinado produto","expor dados sobre um assunto para informar as pessoas","ensinar as pessoas a realizarem uma receita","narrar uma história de superação pessoal"],"ok":"A","e":"A crítica/humor do meme tem função de conscientização social."},
+{"id":"p1q56","p":1,"n":56,"m":"Português","q":"Na pesquisa 'Noções sobre a Ciência' (2023) mediu-se a familiaridade dos entrevistados com noções elementares de ciência. A partir do texto e do infográfico sobre a afirmação 'algumas vacinas podem causar autismo', afirma-se corretamente que","a":["47% das pessoas discordam da afirmação de que as vacinas causam autismo","36% da população não acredita na eficácia desse método","a maioria dos indivíduos vale-se do senso comum para desacreditar as fake news sobre vacinas","o baixo letramento científico da população potencializa a circulação de fake news","21% da população desconhece os meios tradicionais de informação devido ao baixo índice de desinformação"],"ok":"D","e":"A conclusão sustentada pelo texto é que o baixo letramento científico amplia a circulação de notícias falsas."},
+{"id":"p1q57","p":1,"n":57,"m":"Português","q":"A passagem 'visando reforçar a educação científica da população' pode ser substituída, sem prejuízo de sentido, por","a":["porque a educação científica deve ser visada e reforçada pela população","a fim de que a educação científica da população seja reforçada","uma vez que a educação científica da população foi reforçada","com o intuito de a população reforçar a educação científica","enquanto se visa reforçar a educação científica da população"],"ok":"B","e":"'Visando' indica finalidade, mantida em 'a fim de que ... seja reforçada'."},
+{"id":"p1q58","p":1,"n":58,"m":"Geografia","q":"A partir da análise dos gráficos sobre docentes com pós-graduação e empregos em setores de alta tecnologia por região, conclui-se corretamente que, no Brasil,","a":["a região Norte tem o maior percentual de professores com pós-graduação e lidera a geração de empregos em tecnologia","a região Nordeste, apesar do alto percentual de professores com pós-graduação, não tem nenhum estado entre os dez com mais empregos no setor tecnológico","o baixo percentual de docentes com pós-graduação do Centro-Oeste acarreta a alta participação da região na produção de empregos tecnológicos","a região Sudeste apresenta alto índice de docentes com pós-graduação e concentra o maior número de empregos em alta tecnologia","a região Sul tem quatro estados entre os de maior número de empregos no setor de tecnologia"],"ok":"D","e":"O Sudeste reúne a maior qualificação docente e a maior concentração de empregos em alta tecnologia."},
+{"id":"p1q59","p":1,"n":59,"m":"Português","q":"As startups deep techs são empresas inovadoras que fornecem soluções tecnológicas baseadas em conhecimentos científicos para problemas complexos e de alto impacto, como biotecnologia, hardware e inteligência artificial. O texto tem por objetivo","a":["expor o conceito de um novo tipo de empresa","narrar a história de surgimento de uma empresa","defender a superioridade das empresas tecnológicas","descrever como funciona a comunicação entre as startups","angariar seguidores para um canal de tecnologia"],"ok":"A","e":"O texto é expositivo: define o conceito de deep tech."},
+{"id":"p1q60","p":1,"n":60,"m":"Português","q":"De acordo com o texto sobre deep techs,","a":["as deep techs buscam conectar empresas tradicionais a novos consumidores","as empresas chamadas deep techs usam tecnologia para solucionar problemas desafiadores","as soluções encontradas por empresas que usam inteligência artificial restringem-se a áreas irrelevantes","o desenvolvimento de novos aplicativos e aparelhos eletrônicos é o principal foco de startups e deep techs","o baixo número de áreas de atuação dessas empresas limita o investimento no saber científico"],"ok":"B","e":"O texto afirma que deep techs resolvem problemas complexos e de alto impacto com base científica."},
+{"id":"p2q01","p":2,"n":1,"m":"Biologia","q":"Em atividades físicas muito intensas, o O2 que chega aos músculos pode ser insuficiente para a respiração aeróbica, e as fibras obtêm ATP também pela fermentação lática. Sobre essa insuficiência, assinale a alternativa correta.","a":["Uma quantidade maior de ATP é liberada em relação ao processo aeróbico","O gás carbônico é liberado no interior dos ribossomos, ocasionando aumento do pH celular","A produção de ácido acético é estimulada para garantir a contração eficiente dos músculos","O lactato é produzido como produto da quebra da glicose, o que permite continuar gerando ATP rapidamente","Uma quantidade de moléculas inorgânicas e de etanol, ricos em energia, é produzida durante exercícios intensos"],"ok":"D","e":"Na fermentação lática, a glicose é convertida em lactato, gerando ATP rapidamente (menos que na aeróbica)."},
+{"id":"p2q02","p":2,"n":2,"m":"Biologia","q":"A tuberculose voltou a ser uma das principais causas de morte por um único agente infeccioso. Atletas profissionais têm risco elevado por viagens frequentes e ambientes fechados. Entre as medidas preventivas, destaca-se","a":["a prática regular de atividades físicas para adquirir imunidade contra as formas virais mais graves","o consumo de água tratada, com processos de purificação em estações de tratamento","o uso de máscaras ao ter contato com um doente, a fim de evitar a inalação de gotículas contaminadas pela tosse, fala ou espirro","o consumo de frutas e verduras cruas higienizadas para eliminar o risco de contaminação","a ingestão preventiva de antibióticos para impedir a propagação dos vírus causadores da doença"],"ok":"C","e":"A tuberculose é bacteriana e transmitida por gotículas respiratórias: máscara é a medida indicada."},
+{"id":"p2q03","p":2,"n":3,"m":"Biologia","q":"A eritropoietina (EPO) é produzida principalmente pelos rins e fígado e estimula a medula óssea a produzir hemácias, aumentando o transporte de oxigênio. Uma consequência direta da baixa oxigenação tecidual causada pela falta de EPO é","a":["a icterícia, por acúmulo de bilirrubina","a intolerância ao esforço físico e fadiga extrema","a hipertensão arterial imediata severa","o aumento súbito da densidade óssea","a hipersensibilidade à luz (fotofobia)"],"ok":"B","e":"Menos hemácias significa menos transporte de O2: fadiga e intolerância ao esforço."},
+{"id":"p2q04","p":2,"n":4,"m":"Biologia","q":"Em eventos internacionais, há preocupação com a falta de acesso à água tratada e à ausência de coleta e tratamento de esgoto. Para minimizar esses problemas, as comunidades devem","a":["implementar compostagem comunitária para reduzir o volume de lixo inorgânico e tratar as doenças","impedir a construção de cisternas, devido ao risco de contaminação por poluentes atmosféricos","lançar o esgoto doméstico nos rios para provocar a eutrofização, importante para plantas aquáticas e peixes","priorizar a construção de hospitais especializados em infecções gastrointestinais, independentemente do saneamento","construir banheiros secos ou fossas sépticas, que funcionam por processos biológicos de compostagem ou biodigestão, economizando água potável"],"ok":"E","e":"Banheiros secos e fossas sépticas são soluções biológicas de baixo custo que dispensam água potável."},
+{"id":"p2q05","p":2,"n":5,"m":"Biologia","q":"O javali é uma espécie exótica invasora introduzida no Brasil a partir da década de 1960. Sua agressividade e facilidade de adaptação, associadas à reprodução descontrolada e à ausência de predadores naturais, causam impactos ambientais. Sobre esses animais, é correto afirmar que","a":["reduzem o risco de erosão do solo em áreas de várzea","auxiliam na criação de bovinos em confinamentos","atuam no controle biológico das lagartas, as piores pragas agrícolas","facilitam a dispersão de sementes de árvores nativas raras","possuem alta taxa reprodutiva e grande adaptabilidade a diferentes climas"],"ok":"E","e":"A própria introdução descontrolada decorre da alta reprodução e da grande adaptabilidade da espécie."},
+{"id":"p2q06","p":2,"n":6,"m":"Biologia","q":"No café da manhã de um jogador: ovos (30 g proteína, 4 g carboidrato), abacate (2 g e 9 g), iogurte grego (30 g e 10 g), granola (3 g e 20 g), suco de laranja (1,5 g e 21 g). Considerando proteínas e carboidratos (4 kcal/g), o item mais energético é","a":["ovos","abacate","iogurte","granola","suco de laranja"],"ok":"C","e":"Iogurte: (30+10)×4 = 160 kcal — maior valor entre os itens."},
+{"id":"p2q07","p":2,"n":7,"m":"Matemática","q":"[Questão com gráficos de radar no caderno original] A partir das informações dos gráficos de radar dos Personagens 1 e 2, é correto afirmar que","a":["o Personagem 2 possui menor resistência que o Personagem 1, mas maior equilíbrio","o Personagem 2 é superior ao Personagem 1 em todas as características","ambos apresentam exatamente o mesmo desempenho em equilíbrio e em força","o Personagem 1 possui a força como maior estatística; o Personagem 2, o equilíbrio","o Personagem 1 apresenta maior desempenho em agilidade, resistência e precisão em relação ao Personagem 2"],"ok":null,"e":"Depende da leitura dos gráficos da prova original."},
+{"id":"p2q08","p":2,"n":8,"m":"Matemática","q":"[Questão com gráficos de radar] Sorteando ao acaso uma das habilidades de qualquer um dos dois personagens, a probabilidade de ela ser menor ou igual a 3 é","a":["1/2","1/3","1/6","5/6","5/12"],"ok":null,"e":"Depende da leitura dos gráficos da prova original."},
+{"id":"p2q09","p":2,"n":9,"m":"Matemática","q":"[Questão com gráficos de radar] A média aritmética das estatísticas das habilidades do Personagem 1 pertence a qual intervalo real?","a":["[–1; 1[","[1; 2[","[2; 3[","[3; 4[","[4; 5["],"ok":null,"e":"Depende da leitura dos gráficos da prova original."},
+{"id":"p2q10","p":2,"n":10,"m":"Matemática","q":"[Questão com gráficos de radar] A área aproximada do polígono formado pela ligação das estatísticas do Personagem 2, usando A = (l1·l2·sen θ)/2 e √3 ≈ 1,7, é","a":["30,2","29,4","27,5","25,7","23,8"],"ok":null,"e":"Depende da leitura dos gráficos da prova original."},
+{"id":"p2q11","p":2,"n":11,"m":"Matemática","q":"A bola Trionda, da Copa de 2026, é baseada no tetraedro regular — sólido de quatro faces triangulares iguais — e o truque para obter o formato esférico foi transformar os lados retos dos triângulos em curvas. Após esse processo, a característica do tetraedro que permanece preservada é","a":["a medida dos ângulos entre as bordas das regiões da superfície","o volume do sólido geométrico obtido","o comprimento das curvas que delimitam cada região da superfície","o caráter plano das regiões da superfície","a quantidade de regiões que compõem a superfície do sólido"],"ok":"E","e":"Permanecem as 4 regiões (painéis); ângulos, comprimentos, planicidade e volume mudam."},
+{"id":"p2q12","p":2,"n":12,"m":"Matemática","q":"O modelo Pro da bola Trionda tem cerca de 69 cm de circunferência. Usando V = (4/3)·π·r³ e π = 3, o volume aproximado é","a":["3 571 cm³","6 084 cm³","13 140 cm³","14 283 cm³","16 425 cm³"],"ok":"B","e":"r = 69/6 ≈ 11,5 cm; V = 4 × 11,5³ ≈ 6 084 cm³."},
+{"id":"p2q13","p":2,"n":13,"m":"Matemática","q":"O modelo Pro custa cerca de R$ 1.300,00 e o modelo Mini custa R$ 100,00. A porcentagem que o Mini representa em relação ao preço do Pro é, aproximadamente,","a":["5%","8%","10%","13%","20%"],"ok":"B","e":"100/1 300 ≈ 0,077 → 8%."},
+{"id":"p2q14","p":2,"n":14,"m":"Matemática","q":"Uma câmera registrou a trajetória de uma bola: em t = 0, A = 0; t = 1, A = 8; t = 5, A = 20 (t em segundos, A em metros). Sabendo que a trajetória é uma função de 2º grau, ela é","a":["A(t) = –t² + 9t","A(t) = –t² + 5t","A(t) = –t² + 13t","A(t) = 3t² + 5t","A(t) = 3t² + 9t"],"ok":"A","e":"A(1) = –1 + 9 = 8 e A(5) = –25 + 45 = 20: satisfaz os três pontos."},
+{"id":"p2q15","p":2,"n":15,"m":"Biologia","q":"O sarampo é altamente contagioso. O limiar de imunidade de rebanho é p = (1 – 1/R0)×100%, com R0 estimado entre 12 e 18. Logo, o sarampo é causado por ____ e a proporção mínima da população a ser vacinada é ____.","a":["uma bactéria — 94,4%","um vírus — 94,4%","um protozoário — 93,3%","um vírus — 91,7%","uma bactéria — 91,7%"],"ok":"D","e":"Sarampo é viral; com R0 = 12, p = 1 – 1/12 ≈ 91,7% (proporção mínima)."},
+{"id":"p2q16","p":2,"n":16,"m":"História","q":"O Palestra Itália (hoje Palmeiras), fundado em 1914 por maioria de origem italiana, tinha entre seus torcedores Maria das Dores, mulher negra e ex-escravizada, considerada a maior palestrina do país. Na década de 1920, atletas brasileiros e negros passaram a integrar a agremiação. Esse relato evidencia que","a":["o clube foi fundado inteiramente por europeus, o que inviabilizava a presença de negros em seu quadro de atletas","o Palestra Itália teve como primeira presidente uma mulher negra","o clube, por ter origens italianas, rechaçava pessoas de outras nacionalidades entre seus torcedores","a Itália, por ser um país africano, atraía a simpatia de muitos ex-escravizados","o clube, ao invés de adotar postura de segregação, abraçava e aprofundava sua relação com a sociedade em que se inseria"],"ok":"E","e":"O texto mostra inclusão de torcedores e atletas negros, contrariando a segregação."},
+{"id":"p2q17","p":2,"n":17,"m":"Geografia","q":"As tensões entre Sérvia e Albânia têm raízes históricas e étnicas nos Bálcãs. O conflito mais proeminente envolve a disputa territorial sobre","a":["a Palestina, de maioria albanesa, que luta pela independência da Sérvia","o Kosovo, de maioria albanesa, que declarou independência da Sérvia","a Cachemira, de maioria sérvia, que luta por independência da Albânia","a Catalunha, de maioria sérvia, que luta pela anexação à Albânia","o Nagorno-Karabakh, de maioria albanesa, que declarou independência da Sérvia"],"ok":"B","e":"O Kosovo, de maioria albanesa, declarou independência da Sérvia em 2008."},
+{"id":"p2q18","p":2,"n":18,"m":"História","q":"Muitos times paulistas nasceram da união de funcionários de companhias de estradas de ferro, como Noroeste de Bauru (1910), Nacional (1919) e Bragantino (1928). Essa ligação entre São Paulo e o desenvolvimento ferroviário do fim do século XIX e início do XX ocorreu devido à","a":["interiorização da indústria ferroviária, que construiu fábricas nas cidades médias do interior paulista","utilização do território paulista para o escoamento da soja do Centro-Oeste pelos portos do estado","introdução do cultivo da cana-de-açúcar no interior paulista, incentivado pelo Proálcool","expansão, no estado, da cultura do café, que fez surgir ferrovias ligando áreas produtoras ao porto de Santos","existência de campos de futebol construídos pelo governo estadual como opção de lazer"],"ok":"D","e":"A expansão cafeeira financiou as ferrovias que ligavam o interior ao porto de Santos."},
+{"id":"p2q19","p":2,"n":19,"m":"Geografia","q":"No fim do século XIX, as classes populares ocupavam terrenos abertos e planos nas margens dos rios para jogar futebol — o futebol de várzea. Hoje, muitas dessas áreas foram impermeabilizadas. Uma consequência desse processo para o meio urbano é","a":["aumento da infiltração das águas pluviais no solo","aumento do volume de água dos lençóis freáticos","aumento na frequência das enchentes e das inundações","diminuição da quantidade de chuvas nas margens dos rios","diminuição da velocidade de escoamento das águas pluviais"],"ok":"C","e":"Solo impermeabilizado reduz a infiltração, aumenta o escoamento superficial e agrava enchentes."},
+{"id":"p2q20","p":2,"n":20,"m":"Geografia","q":"O estádio Zerão, em Macapá, tem fama de ter a linha de meio de campo sobre a linha do Equador, com cada time defendendo um hemisfério. Os hemisférios a que o texto se refere são corretamente denominados","a":["Setentrional e Meridional","Greenwich e Equador","Austral e Ocidental","Boreal e Oriental","Oeste e Leste"],"ok":"A","e":"O Equador divide a Terra em hemisférios Norte (Setentrional) e Sul (Meridional)."},
+{"id":"p2q21","p":2,"n":21,"m":"Geografia","q":"Uma partida em Rio Branco (AC, UTC–5) começou às 19 horas locais. Sabendo que São Paulo está em UTC–3, os torcedores paulistas acompanharam o início da partida","a":["às 11 horas","às 17 horas","às 19 horas","às 21 horas","à 1 hora"],"ok":"D","e":"Duas horas a mais: 19h + 2h = 21h em São Paulo."},
+{"id":"p2q22","p":2,"n":22,"m":"Química","q":"O óxido nítrico (NO) não reage com água, ácidos ou bases, mas atua como vasodilatador. Esse composto é classificado corretamente como um","a":["hidrácido","hidróxido","óxido ácido","óxido neutro","sal oxigenado"],"ok":"D","e":"Por não reagir com água, ácidos ou bases, o NO é óxido neutro."},
+{"id":"p2q23","p":2,"n":23,"m":"Química","q":"Nas fórmulas estruturais da adrenalina e da dopamina, um grupo funcional comum às duas moléculas é o grupo","a":["hidroxila (–OH), ligado ao carbono saturado, característico da função álcool","hidroxila (–OH), ligado ao anel aromático, característico da função fenol","amídico (–CONH–), ligado ao carbono saturado, característico da função amida","carboxila (–COOH), ligado ao carbono insaturado, característico da função ácido carboxílico","carbonila (–CO–), ligado ao carbono insaturado, característico da função cetona"],"ok":"B","e":"As duas moléculas têm OH ligado diretamente ao anel aromático: função fenol."},
+{"id":"p2q24","p":2,"n":24,"m":"Química","q":"Sais usados em fogos de artifício: NaCl (amarela), CuCl2 (verde), KNO3 (lilás), SrCl2 (vermelho), Ca(NO3)2 (laranja). Para homenagear o time campeão, cuja bandeira tem as cores lilás e verde, os sais usados serão, respectivamente,","a":["cloreto de sódio e cloreto de cobalto(II)","nitrato de potássio e cloreto de cobre(II)","cloreto de estrôncio e nitrato de cálcio","cloreto de sódio e cloreto de estrôncio","nitreto de potássio e cloreto de cobre(II)"],"ok":"B","e":"Lilás = KNO3 (nitrato de potássio); verde = CuCl2 (cloreto de cobre II)."},
+{"id":"p2q25","p":2,"n":25,"m":"Química","q":"Bebidas isotônicas têm concentração de sódio semelhante à do sangue (140 mg/L). Um jogador ingeriu 0,042 g de íons sódio em uma dose. O volume da dose ingerida, em mL, é","a":["100","200","300","400","500"],"ok":"C","e":"42 mg ÷ 140 mg/L = 0,30 L = 300 mL."},
+{"id":"p2q26","p":2,"n":26,"m":"Química","q":"Comparando algodão (fibras naturais) e tecido sintético dry fit quanto à polaridade e à absorção de água — sabendo que o algodão retém suor e o dry fit o espalha —, as características (I) polaridade do algodão, (II) polaridade do dry fit, (III) absorção do algodão e (IV) absorção do dry fit são","a":["(I) alta; (II) alta; (III) baixa; (IV) baixa","(I) alta; (II) baixa; (III) alta; (IV) baixa","(I) baixa; (II) alta; (III) baixa; (IV) alta","(I) baixa; (II) baixa; (III) alta; (IV) alta","(I) alta; (II) alta; (III) alta; (IV) baixa"],"ok":"B","e":"Algodão é polar (celulose) e absorve água; o sintético é apolar e absorve pouco (só espalha)."},
+{"id":"p2q27","p":2,"n":27,"m":"Física","q":"O corpo humano regula a temperatura principalmente pela sudorese. Em ambientes úmidos, esse mecanismo se torna menos eficiente porque","a":["a alta umidade promove a desnaturação de enzimas responsáveis pela sudorese","o calor específico da água diminui em ambientes úmidos, reduzindo a absorção de energia do suor","a elevada pressão parcial de vapor de água no ar dificulta a evaporação do suor, reduzindo a perda de calor da pele","a pressão atmosférica aumenta com a diminuição da umidade, impedindo a perda de calor","o suor passa do estado sólido para o gasoso, sem absorver energia"],"ok":"C","e":"Ar saturado de vapor reduz a evaporação do suor, principal mecanismo de perda de calor."},
+{"id":"p2q28","p":2,"n":28,"m":"Inglês","q":"Zayu the Jaguar, mascote do México na Copa de 2026: 'With a name inspired by unity, strength and joy, Zayu transforms on the pitch as a striker, showcasing exceptional ingenuity and agility...' O jaguar Zayu retrata","a":["ingenuidade, pureza e paixão","força, agilidade e criatividade","vibração, inspiração e inocência","união, regionalismo e exceção","espírito, religião e fraternidade"],"ok":"B","e":"O texto cita strength (força), agility (agilidade) e ingenuity (criatividade)."},
+{"id":"p2q29","p":2,"n":29,"m":"Inglês","q":"Na sentença 'You play like a girl', a palavra like indica","a":["afeto","oposição","comparação","exemplificação","distanciamento"],"ok":"C","e":"'Like' aqui é preposição de comparação: 'como uma menina'."},
+{"id":"p2q30","p":2,"n":30,"m":"Inglês","q":"Na charge, um torcedor segura o cartaz 'Remember when that was an insult?'. Conclui-se corretamente que","a":["as mulheres não são tão boas jogadoras quanto os homens","a fala do personagem na torcida insulta as jogadoras de futebol","a torcida hostiliza os jogadores comparando-os a crianças","a torcida mostra-se orgulhosa pela maneira como jogadoras de futebol estadunidenses jogam","o cartaz na torcida ridiculariza as jogadoras de futebol estadunidenses"],"ok":"D","e":"A frase 'lembra quando isso era um insulto?' indica orgulho: hoje jogar como uma mulher é elogio."},
+{"id":"p2q31","p":2,"n":31,"m":"Inglês","q":"'The Sociology of Football is the study of the social dynamics, cultural significance, and institutional structures surrounding football... It examines how football influences and reflects social identities, community relations, and power dynamics.' De acordo com o texto, a Sociologia do Futebol estuda","a":["o poder envolvido no esporte e as desigualdades geradas por ele","os desequilíbrios sociais e os fenômenos globalizados","a influência do jogo na violência e nos valores sociais","as relações sociais e culturais em torno do futebol","as relações políticas na classificação esportiva"],"ok":"D","e":"O texto fala de dinâmicas sociais, significado cultural e identidades: relações sociais e culturais."},
+{"id":"p2q32","p":2,"n":32,"m":"Inglês","q":"No texto The Sociology of Football, as palavras destacadas it e its referem-se, respectivamente, a","a":["'football' e 'football'","'a global phenomenon' e 'power dynamics'","'institutional structures' e 'social identities'","'cultural significance' e 'community relations'","'the Sociology of Football' e 'football'"],"ok":"E","e":"'It examines...' retoma o sujeito The Sociology of Football; 'its role' refere-se ao futebol."},
+{"id":"p2q33","p":2,"n":33,"m":"Inglês","q":"Resenha de The English Game: 'Period dramas aren't to everyone's taste... The new drama series about the early days of the FA Cup in the late 1800s, however, is an example of this theme being done well. The show is a perfect example of telling a class war story in a sensitive and realistic manner.' A resenha é","a":["positiva e dá destaque à sensibilidade na abordagem do tema a respeito da luta de classes","positiva e mostra romantismo em tempos dramáticos de forma bastante glamourizada","negativa, pois são poucas as pessoas que se interessam por histórias de época","negativa, pois a série é repetitiva, insensível e excessivamente romantizada","negativa, pois a combinação dos temas futebol e drama de época mostrou-se desastrosa"],"ok":"A","e":"O 'however' e 'done well' confirmam avaliação positiva, com elogio à sensibilidade e ao realismo."},
+{"id":"p2q34","p":2,"n":34,"m":"Física","q":"Jogadores em altitude elevada reclamam de falta de ar e comentaristas dizem que a bola chutada é 'mais rápida'. Isso ocorre porque","a":["os jogadores são mais rápidos devido à alta altitude proporcionar mais oxigênio","os atletas têm maior potência nas pernas pelo ar ser mais rarefeito","a resistência do ar é menor por ele ser mais rarefeito","o ar comprimido da bola a torna mais leve que o ar","a bola possui menor volume em alta altitude"],"ok":"C","e":"Ar rarefeito significa menor resistência do ar, então a bola perde menos velocidade."},
+{"id":"p2q35","p":2,"n":35,"m":"Física","q":"Um goleiro bateu um tiro de meta e a bola percorreu cerca de 96 m na horizontal em 6 s. Desprezando a resistência do ar, é correto afirmar que","a":["sua velocidade horizontal foi 576 m/s no final da trajetória","sua velocidade vertical foi 16 m/s no ponto mais alto da trajetória","sua velocidade oblíqua foi nula quando estava bem próxima de atingir o chão","suas velocidades vertical e horizontal foram de 16 m/s no ponto mais alto","sua velocidade vertical foi nula e a horizontal foi 16 m/s no ponto mais alto da trajetória"],"ok":"E","e":"vx = 96/6 = 16 m/s (constante); no ponto mais alto vy = 0."},
+{"id":"p2q36","p":2,"n":36,"m":"Física","q":"O sistema GoalRef se baseia em indução eletromagnética: quando a bola entra no campo magnético da baliza, o fluxo magnético que atravessa suas bobinas varia, induzindo uma força eletromotriz. A equação física envolvida é","a":["ɛ = Δϕ/Δt","t = Δɛ/Δϕ","Δϕ = Δt/Δɛ","ɛ = Δt/Δϕ","ϕ = Δɛ/Δt"],"ok":"A","e":"Lei de Faraday: a força eletromotriz induzida é a variação do fluxo por unidade de tempo."},
+{"id":"p2q37","p":2,"n":37,"m":"Física","q":"O sistema Hawk-Eye usa 14 câmeras que filmam a bola a 500 quadros por segundo. O período, em segundos, entre cada disparo de cada câmera é de","a":["2,0×10^6","2,0×10^3","2,0×10^0","2,0×10^-3","2,0×10^-6"],"ok":"D","e":"T = 1/f = 1/500 = 2,0×10^-3 s."},
+{"id":"p2q38","p":2,"n":38,"m":"Física","q":"Uma bola foi calibrada a 0,90 atm a 27 °C (300 K). Exposta ao Sol, a temperatura subiu para 57 °C (330 K), com volume constante. Sendo P0/T0 = P1/T1, a bola","a":["foi mantida, pois a pressão abaixou para aproximadamente 0,80 atm","foi trocada, pois a pressão se manteve em aproximadamente 0,90 atm","foi mantida, pois a pressão chegou a aproximadamente 1,00 atm","foi trocada, pois a pressão aumentou para aproximadamente 1,20 atm","foi mantida, pois a pressão alcançou aproximadamente 1,90 atm"],"ok":"C","e":"P1 = 0,90 × 330/300 = 0,99 atm ≈ 1,00 atm, dentro do limite de 1,10 atm."},
+{"id":"p2q39","p":2,"n":39,"m":"Física","q":"Uma cobrança de pênalti atingiu 110,79 km/h (≈ 31 m/s). Considerando a massa da bola aproximadamente 0,42 kg, o trabalho da força resultante aplicada, em joules, é de aproximadamente","a":["2 580","202","23","13","7"],"ok":"B","e":"Trabalho = energia cinética = ½ × 0,42 × 31² ≈ 202 J."},
+{"id":"p2q40","p":2,"n":40,"m":"História","q":"Jogos com bola existem há pelo menos 4,5 mil anos, com bolas de linho no Egito, de couro e pele de carneiro na China. Sendo atividades coletivas, exigiam regras compartilhadas, antecipação dos movimentos alheios e cooperação, habilidades também úteis na caça e na defesa de territórios. Conclui-se que os jogos de bola","a":["substituíram as atividades de caça e coleta, permitindo que os grupos se fixassem em aldeias permanentes","surgiram após a invenção da escrita, pois as regras precisavam ser registradas","eram praticados individualmente, sem interação entre os membros do grupo","contribuíram para o desenvolvimento de habilidades sociais e cognitivas úteis para a vida em sociedade","eram praticados por adultos, com bolas confeccionadas pelas crianças"],"ok":"D","e":"O texto afirma que os jogos desenvolviam cooperação e antecipação, habilidades sociais e cognitivas."},
+{"id":"p2q41","p":2,"n":41,"m":"História","q":"Os gregos praticavam o epískyros, jogo coletivo que exigia agilidade, precisão e resistência e fortalecia o espírito de equipe; os romanos, inspirados nele, criaram o harpastum, exercício violento benéfico ao treinamento militar. A diferença entre eles revela","a":["o desprezo dos romanos pela cultura grega, criando uma modalidade inédita sem semelhança","que o epískyros preparava os gregos para guerras, enquanto o harpastum era espetáculo sem função militar","a inferioridade cultural dos gregos, que não atribuíam utilidade aos jogos","que o epískyros era exclusivamente feminino e o harpastum só para homens fora do exército","a distinção entre os gregos, que valorizavam movimento e cooperação, e os romanos, que enfatizavam utilidade militar e competição violenta"],"ok":"E","e":"O texto opõe o jogo grego cooperativo ao harpastum romano violento e militarizado."},
+{"id":"p2q42","p":2,"n":42,"m":"História","q":"O jogo de bola mesoamericano era ritualístico: bolas de borracha de 3 a 4 kg, campos em formato de 'I' e sacrifícios humanos comuns. Para os astecas, o jogo representava a batalha entre as forças noturnas e o Sol, e os sacrifícios mantinham o Sol iluminando a Terra. O caráter sagrado evidenciava-se pelo fato de que","a":["as bolas eram oferendas religiosas e os campos imitavam a forma dos templos","os sacrifícios visavam manter o Sol iluminando a Terra, e o jogo representava a batalha entre o Sol e as forças noturnas","os campos eram construídos antes do templo, e os perdedores eram sacrificados à Lua","o jogo representava a batalha entre o Sol e as forças noturnas, e os perdedores eram sacrificados para o Sol descansar","as bolas pesavam de 3 a 4 kg e eram tocadas com quadris, braços e pernas para imitar os deuses"],"ok":"B","e":"O texto associa o jogo à batalha cósmica e os sacrifícios à manutenção do Sol."},
+{"id":"p2q43","p":2,"n":43,"m":"História","q":"Reinaldo, do Atlético Mineiro, comemorou um gol na Copa de 1978 com o punho cerrado e quase não jogou mais pela seleção; afirmou ter sido retaliado pelo técnico, capitão do Exército, que recebia ordens diretas do regime. O regime ao qual o relato se refere é","a":["Era Vargas","Pacto Colonial","Ditadura civil-militar","República Velha","Primeiro Reinado"],"ok":"C","e":"1978 corresponde à ditadura civil-militar iniciada em 1964."},
+{"id":"p2q44","p":2,"n":44,"m":"História","q":"Antes da Copa de 1938, Vargas recebeu os atletas e associou o desempenho da seleção à grandeza do Estado Novo; Gilberto Freyre falava em 'democracia racial', mas jogadores negros e pobres enfrentaram racismo explícito na imprensa e, após o torneio, muitos retornaram ao anonimato e a subempregos. Segundo o texto,","a":["a ideia de 'democracia racial' correspondia à realidade da época, pois jogadores negros eram tratados como heróis","a derrota em 1938 levou Vargas a abandonar o incentivo ao esporte","a derrota na final prejudicou a imagem do Brasil e levou à proibição do futebol","a propaganda política do Estado Novo contrastava com o racismo e com a situação social de jogadores negros","Vargas ignorou a Copa de 1938 e concentrou a propaganda em outros eventos"],"ok":"D","e":"O texto mostra o contraste entre a propaganda oficial e a realidade dos jogadores negros."},
+{"id":"p2q45","p":2,"n":45,"m":"Geografia","q":"Jogadores de origem africana formados nas antigas metrópoles defendem seleções africanas, mas o dinheiro de suas transferências não beneficia os clubes do continente; segundo a FIFA, africanos são a segunda mão de obra estrangeira mais procurada na Europa e a mais barata. Considerando globalização e divisão internacional do trabalho, é correto afirmar que","a":["o movimento de jogadores entre países reproduz padrões históricos semelhantes aos das migrações em outras áreas da economia global","a migração reverteu a lógica histórica da divisão internacional do trabalho, com europeus indo em maior número à África","a migração ocorre apenas entre países ricos do hemisfério Norte","a migração não encontra paralelos com outras formas de migração, pois o futebol não se insere no capitalismo globalizado","os países africanos proíbem a saída de seus jogadores, retendo-os nas ligas nacionais"],"ok":"A","e":"A transferência de talentos do Sul para o Norte repete a lógica histórica da divisão internacional do trabalho."},
+{"id":"p2q46","p":2,"n":46,"m":"Matemática","q":"[Questão com figuras no caderno original] Aplicando uma rotação de 90° no sentido horário em torno de um ponto P central e retirando o ponto P, qual imagem será obtida?","a":["figura A","figura B","figura C","figura D","figura E"],"ok":null,"e":"Depende das figuras da prova original."},
+{"id":"p2q47","p":2,"n":47,"m":"Matemática","q":"O refrão 'ALLEZ, ALLEZ, ALLEZ!' pode ser repetido sucessivamente, sem espaços e indefinidamente. O símbolo que ocupa a posição de número 1 985 nessa sequência é","a":["A","L","E","Z","!"],"ok":"D","e":"O bloco tem 5 letras; 1 985 é múltiplo de 5, logo a posição cai na última letra: Z."},
+{"id":"p2q48","p":2,"n":48,"m":"Lógica","q":"Se SURFE se relaciona com PRANCHA, então FUTEBOL se relaciona com","a":["área","bola","campo","drible","estádio"],"ok":"B","e":"A relação é instrumento/objeto principal da prática: surfe usa prancha, futebol usa bola."},
+{"id":"p2q49","p":2,"n":49,"m":"Lógica","q":"Regras: as equipes devem usar cores distintas entre si e da arbitragem; cada goleiro deve usar cor distinta dos outros jogadores e da arbitragem; se os dois goleiros tiverem a mesma cor e nenhum tiver outra camiseta, o árbitro permite o jogo; as camisas interiores devem ter uma única cor, igual à cor principal da manga da camiseta; jogadores da mesma equipe devem usar calções interiores de mesma cor. Situação: Time A de camiseta azul com mangas azuis; Time B verde com mangas brancas; arbitragem de preto; os dois goleiros de amarelo sem outro uniforme; um jogador do B com camisa interior verde; dois jogadores do A com calções interiores, um azul e outro branco. Quantas infrações foram cometidas?","a":["nenhuma","uma","duas","três","quatro"],"ok":"C","e":"Duas infrações: a camisa interior do jogador do B (verde, manga branca) e os calções interiores de cores diferentes no Time A. Os goleiros iguais são permitidos pela regra 3."},
+{"id":"p2q50","p":2,"n":50,"m":"Lógica","q":"Regras: ou Elias ou Iara usa a camisa; Andrea usa se, e somente se, Elias usar; se Iara usar, então Andrea também usa. Quando os três forem torcer, conclui-se que","a":["Iara nunca usa a camisa; Andrea e Elias sempre a usam","Elias nunca usa a camisa; Andrea e Iara sempre a usam","Andrea sempre usa a camisa; Elias e Iara nunca a usam","Iara sempre usa a camisa; Andrea e Elias nunca a usam","Elias sempre usa a camisa; Andrea e Iara nunca a usam"],"ok":"A","e":"Com Elias usando e Iara não, as três premissas são satisfeitas; qualquer solução com Iara usando leva a contradição."},
+{"id":"p2q51","p":2,"n":51,"m":"Geografia","q":"Estádios da Copa de 2026: o Brasil joga contra o Marrocos no MetLife Stadium, contra o Haiti no Lincoln Financial Field e contra a Escócia no Hard Rock Stadium, em Miami. Na ordem dos eventos, os deslocamentos entre os estádios devem se dar nos sentidos","a":["Norte e Norte-noroeste","Noroeste e Norte-nordeste","Sul e Sul-sudeste","Sul-sudeste e Leste-sudeste","Sudoeste e Sul-sudoeste"],"ok":"E","e":"Do MetLife (Nova Jersey) para a Filadélfia o deslocamento é para sudoeste; da Filadélfia para Miami, sul-sudoeste."},
+{"id":"p2q52","p":2,"n":52,"m":"Português","q":"No texto, 'o futebolês foi pouco a pouco se incorporando', 'a criatividade extrapola os limites da imaginação', o time 'retardando deliberadamente o jogo' e 'provavelmente o técnico buscou inspiração'. Os termos destacados podem ser substituídos, respectivamente, por","a":["calmamente, limita-se a, propositalmente, decerto","brevemente, combate, de propósito, seguramente","paulatinamente, submete-se a, repentinamente, quiçá","tardiamente, excede, involuntariamente, seguramente","progressivamente, supera, intencionalmente, talvez"],"ok":"E","e":"Pouco a pouco = progressivamente; extrapola = supera; deliberadamente = intencionalmente; provavelmente = talvez."},
+{"id":"p2q53","p":2,"n":53,"m":"Português","q":"De acordo com o texto sobre o 'futebolês',","a":["dialoga com diferentes áreas da sociedade e incorpora-se à linguagem cotidiana","influenciou a elite intelectual mundial e, por isso, foi dicionarizado","representa um dialeto restrito a profissionais do futebol","limita-se a palavras e expressões que remetem a 'bola'","origina-se da linguagem culinária e do jogo do bicho, alcançando os campos"],"ok":"A","e":"O texto mostra o futebolês migrando para a culinária, o jogo do bicho e a fala popular."},
+{"id":"p2q54","p":2,"n":54,"m":"Português","q":"Assinale a alternativa cujo provérbio dialoga com o sentido da expressão 'bola pra frente'.","a":["A cavalo dado não se olham os dentes","Antes só do que mal acompanhado","Águas passadas não movem moinhos","Dai a César o que é de César","Quem semeia vento colhe tempestade"],"ok":"C","e":"Ambos remetem a deixar o passado para trás e seguir em frente."},
+{"id":"p2q55","p":2,"n":55,"m":"Português","q":"Na charge, o cartão apresentado é vermelho. Sobre a linguagem verbal e não verbal na construção da charge, é correto afirmar que","a":["o cartão vermelho expressa a recusa em aceitar a reprodução de preconceitos sociais dentro do campo","a representação da mulher, embora em posição de poder, é marcada pela invisibilização de seu papel","a bola parada representa a necessidade de rever as regras do jogo para garantir igualdade","o taco, segurado pelo jogador, ameniza a atitude preconceituosa ao associá-la a um traço primitivo","o saco, que cobre a identidade do agressor, e a ausência do rosto da árbitra igualam vítima e criminoso"],"ok":"A","e":"O cartão vermelho, símbolo de expulsão, é usado para rejeitar o preconceito no campo."},
+{"id":"p2q56","p":2,"n":56,"m":"Português","q":"No poema 'O Anjo das Pernas Tortas', de Vinicius de Moraes, após leitura atenta, é correto afirmar que","a":["o termo 'couro', na primeira estrofe, representa a resistência do jogador durante a partida","a expressão 'um pé de vento', na segunda estrofe, expressa a perda da bola pelo jogador rival","'a multidão contrita em ato de morte', na terceira estrofe, constrói a imagem de tensão dos torcedores","'anjo' e 'G' representam, na quarta estrofe, o jogador Garrincha e a bola jogada ao gol respectivamente","as expressões 'pura imagem' e 'pura dança', na quarta estrofe, retratam o futebol como arte impopular"],"ok":"C","e":"A imagem reforça a tensão/expectativa da torcida antes do gol; em 'G chuta um o', o G é o jogador e o 'o' é a bola."},
+{"id":"p2q57","p":2,"n":57,"m":"Português","q":"Os verbos, no poema, estão conjugados","a":["no presente contínuo, para dar a sensação de ações que se desenrolam lentamente","no presente, para aproximar as ações do leitor, semelhante a uma narração esportiva","no passado, para indicar que os feitos do jogador se realizaram rapidamente","no passado distante, para marcar a importância histórica do jogador","no presente atemporal, para expressar ações realizáveis a qualquer momento por todos"],"ok":"B","e":"O presente aproxima o leitor e cria a simultaneidade típica da narração esportiva."},
+{"id":"p2q58","p":2,"n":58,"m":"Português","q":"Comparando as manchetes 'Declarações misóginas de zagueiro contra árbitra marcam eliminação do Bragantino' e 'Jogador do Bragantino pega 12 jogos de suspensão por falas sexistas contra arbitragem', conclui-se que","a":["o texto II, ao colocar 'por falas sexistas' no final da manchete, enfatiza a ação do jogador","a identificação do atleta, em I e II, ocorre na última posição da linha fina para disfarçar o agente","o texto I destaca o preconceito cometido pelo jogador, enquanto o II destaca o jogador punido","o termo 'misóginas', em I, ameniza o crime que é, em II, caracterizado corretamente como 'sexista'","o nome dos times, em I e II, serve para contrapor a qualidade técnica às falhas da arbitragem"],"ok":"C","e":"I põe o foco na declaração preconceituosa; II, na punição do jogador (topicalização)."},
+{"id":"p2q59","p":2,"n":59,"m":"Português","q":"Assinale a alternativa que apresenta a reescrita correta de uma das manchetes.","a":["Eliminação do Bragantino é marcada por declarações misóginas da árbitra contra zagueiro","Devido a falas sexistas contra a arbitragem, jogador do Bragantino é suspenso por 12 jogos","Arbitragem suspende 12 jogos do Bragantino por falas sexistas de seu jogador","Árbitra elimina Bragantino por declarações de zagueiro contra a misoginia","Zagueiro elimina Bragantino por se declarar misógino para a arbitragem"],"ok":"B","e":"Mantém os papéis (jogador = agente da fala; suspensão = consequência) e a correção gramatical."},
+{"id":"p2q60","p":2,"n":60,"m":"Biologia","q":"O Mal da Montanha é causado pela subida rápida a grandes altitudes, onde a pressão atmosférica é menor e menos oxigênio passa dos pulmões para o sangue. El Alto fica a 4 150 m, São Paulo a 760 m e a partida será em Cerro de Pasco, a 4 338 m. É correto afirmar que","a":["o time do São Paulo não sentirá os efeitos, pois está originalmente mais próximo do nível do mar","o Always Ready sentirá menos os efeitos se passar alguns dias, antes do jogo, na cidade de São Paulo","os dois times sentirão os efeitos igualmente por terem atletas de alto desempenho","o time do São Paulo tende a sentir mais os efeitos devido à maior diferença de altitude entre sua cidade e o local do jogo","o Always Ready tende a sentir mais os efeitos, pois seus jogadores estão aclimatados a regiões mais altas"],"ok":"D","e":"Quanto maior a diferença de altitude (760 m → 4 338 m), maior o impacto da aclimatação."}];
+
+const ROTEIRO = [
+{ t: "Diagnóstico", items: ["Refazer a prova completa de 60 questões cronometrada", "Listar erros por matéria"], meta: "Mapa de erros pronto" },
+{ t: "Matemática I", items: ["Porcentagem e proporção", "PA e PG", "Função de 1º e 2º grau", "Exponencial e logaritmo"], meta: "30 questões" },
+{ t: "Matemática II", items: ["Geometria plana e volume de sólidos", "Trigonometria no triângulo retângulo", "Análise combinatória e probabilidade", "Leitura de gráficos"], meta: "30 questões" },
+{ t: "Português I", items: ["Interpretação de texto", "Gêneros: tirinha, charge, meme, infográfico", "Figuras de linguagem", "Coesão e reescrita"], meta: "30 questões" },
+{ t: "Português II + Redação", items: ["Dissertativo-argumentativo e narração", "Repertório sobre ciência/tecnologia e preconceito"], meta: "2 redações por semana" },
+{ t: "Inglês", items: ["Interpretação e vocabulário", "Conectivos e tempos verbais", "Referência pronominal"], meta: "25 questões" },
+{ t: "Biologia", items: ["Citologia e metabolismo", "Genética e fisiologia humana", "Saúde pública e parasitoses", "Ecologia"], meta: "30 questões" },
+{ t: "Química", items: ["Separação de misturas e ligações", "Funções orgânicas", "Concentração e estequiometria", "Eletroquímica e meia-vida"], meta: "30 questões" },
+{ t: "Física", items: ["Cinemática e leis de Newton", "Energia e trabalho", "Hidrostática e gases", "Eletricidade, ondas e indução"], meta: "30 questões" },
+{ t: "História e Geografia", items: ["Brasil República (Vargas e ditadura)", "Guerra Fria e industrialização", "Urbanização, climatologia, cartografia e fusos"], meta: "40 questões" },
+{ t: "Simulados finais", items: ["Um simulado completo por semana", "Corrigir TODOS os erros", "Revisar as questões 'sem gabarito' no caderno original"], meta: "Simulado corrigido e revisado" }
+];
+const ASSUNTOS = [
+"Porcentagem e funções", "Leitura de gráficos e tabelas", "Interpretação de texto e figuras de linguagem",
+"Genética e fisiologia", "Saúde pública e parasitoses", "Funções orgânicas e concentração",
+"Cinemática e energia", "Eletricidade e ondas", "Brasil República e Era Vargas",
+"Urbanização e clima", "Globalização", "Interpretação de inglês"
+];
+const PESOS = [
+["Matemática", 17], ["Português", 14], ["Biologia", 13], ["História", 13], ["Física", 11],
+["Inglês", 10], ["Química", 9], ["Geografia", 9], ["Lógica", 4]
+];
+const MATERIAS = ["Biologia","Física","Química","Matemática","Português","Inglês","História","Geografia","Lógica"];
+const LETRAS = ["A","B","C","D","E"];
+
+const store = window.skipStore("fatec_quiz_v1", {
+stats: {}, erros: [], simulados: [], roteiro: [], tema: "dark"
+});
+
+let state = store.get();
+state.stats = state.stats || {};
+state.erros = state.erros || [];
+state.simulados = state.simulados || [];
+state.roteiro = state.roteiro || [];
+
+function saveState() { store.set(state); }
+
+function escapeHtml(s) {
+return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function registrarResposta(q, correta, idxEscolhido) {
+const s = state.stats[q.id] || { t: 0, a: 0 };
+s.t += 1; if (correta) s.a += 1;
+state.stats[q.id] = s;
+if (!correta) {
+if (!state.erros.includes(q.id)) state.erros.push(q.id);
+} else {
+state.erros = state.erros.filter(id => id !== q.id);
+}
+saveState();
+}
+
+function embaralhar(arr) {
+const a = arr.slice();
+for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+return a;
+}
+
+function badgeGab(q) {
+if (q.ok === null) return '<span class="pill pill-warn">Sem gabarito — confira no caderno</span>';
+if (q.est) return '<span class="pill pill-est">estimado</span>';
+return "";
+}
+
+/* ===== Tabs ===== */
+const tabs = document.querySelectorAll(".tab-btn");
+tabs.forEach(btn => btn.addEventListener("click", () => activateTab(btn.dataset.tab)));
+function activateTab(name) {
+tabs.forEach(b => b.setAttribute("aria-selected", b.dataset.tab === name ? "true" : "false"));
+document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "view-" + name));
+if (name === "desempenho") renderDesempenho();
+if (name === "roteiro") renderRoteiro();
+if (name === "simulado") renderSimuladoIdle();
+}
+
+/* ===== Tema ===== */
+function aplicarTema(t) {
+document.documentElement.setAttribute("data-theme", t);
+const btn = document.getElementById("themeToggle");
+btn.textContent = t === "dark" ? "☀️ Tema claro" : "🌙 Tema escuro";
+}
+document.getElementById("themeToggle").addEventListener("click", () => {
+state.tema = state.tema === "dark" ? "light" : "dark";
+aplicarTema(state.tema); saveState();
+window.skipUI.toast("Tema " + (state.tema === "dark" ? "escuro" : "claro") + " ativado");
+});
+
+/* ===== Treino ===== */
+let treino = null;
+function popularMaterias() {
+const sel = document.getElementById("fMateria");
+sel.innerHTML = '<option value="all">Todas as matérias</option>' + MATERIAS.map(m => `<option value="${m}">${m}</option>`).join("");
+}
+
+function filtrarQuestoes(prova, materia) {
+return QUESTOES.filter(q =>
+(prova === "all" || String(q.p) === prova) &&
+(materia === "all" || q.m === materia)
+);
+}
+
+document.getElementById("btnIniciarTreino").addEventListener("click", () => {
+const prova = document.getElementById("fProva").value;
+const mat = document.getElementById("fMateria").value;
+const qtdV = document.getElementById("fQtd").value;
+const modo = document.getElementById("fModo").value;
+const emb = document.getElementById("fEmbaralhar").checked;
+iniciarTreino(filtrarQuestoes(prova, mat), qtdV, modo, emb);
+});
+
+function iniciarTreino(lista, qtdV, modo, embaralhado, ids) {
+let base = lista.slice();
+if (ids) base = QUESTOES.filter(q => ids.includes(q.id));
+base = embaralhar(base);
+if (qtdV !== "all") base = base.slice(0, parseInt(qtdV, 10));
+if (base.length === 0) {
+document.getElementById("treinoArea").innerHTML = '<div class="panel p-4"><p class="m-0">Nenhuma questão encontrada para este filtro.</p></div>';
+return;
+}
+treino = { lista: base, pos: 0, modo, emb: embaralhado, respostas: {}, acertos: 0, final: false };
+renderTreino();
+window.skipUI.toast("Treino iniciado com " + base.length + " questões");
+}
+
+function renderTreino() {
+const area = document.getElementById("treinoArea");
+if (!treino) return;
+const total = treino.lista.length;
+if (treino.final) { renderResultadoTreino(); return; }
+const q = treino.lista[treino.pos];
+const pct = Math.round((treino.pos / total) * 100);
+const resp = treino.respostas[q.id];
+const ordem = q._ordem || (q._ordem = treino.emb ? embaralhar(q.a.map((_, i) => i)) : q.a.map((_, i) => i));
+const opcoes = ordem.map(i => ({ texto: q.a[i], orig: i }));
+const corretaOrig = q.ok ? LETRAS.indexOf(q.ok) : -1;
+
+let html = `
+<div class="card-q" data-testid="card">
+<div class="session-bar">
+<div>
+<span class="pill">${escapeHtml(q.m)}</span>
+<span class="pill">${q.p}º sem 2026 · Q${q.n}</span>
+${badgeGab(q)}
+</div>
+<div class="muted-sm">Questão ${treino.pos + 1} de ${total} · Acertos: <strong>${treino.acertos}</strong></div>
+</div>
+<div class="progress-track" style="margin:14px 0;" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><div class="progress-fill" style="width:${pct}%"></div></div>
+<p style="font-size:1.02rem; line-height:1.6; margin:0 0 16px;">${escapeHtml(q.q)}</p>
+<div id="alts">`;
+
+opcoes.forEach((o, idx) => {
+let cls = "alt-btn";
+const letra = LETRAS[idx];
+if (resp !== undefined) {
+if (o.orig === corretaOrig) cls += " correct";
+if (resp.idx === o.orig && o.orig !== corretaOrig) cls += " wrong";
+}
+html += `<button class="${cls}" type="button" data-orig="${o.orig}" data-letra="${letra}" aria-label="Alternativa ${letra}: ${escapeHtml(o.texto)}">
+<span class="alt-letter">${letra}</span><span>${escapeHtml(o.texto)}</span></button>`;
+});
+html += `</div>`;
+
+if (q.ok === null) {
+html += `<div class="explain"><strong>Sem gabarito confiável.</strong> Esta questão depende de imagem ou gráfico do caderno original. ${escapeHtml(q.e)}</div>`;
+}
+if (resp !== undefined && q.ok !== null && treino.modo === "imediata") {
+const cert = resp.idx === corretaOrig;
+html += `<div class="explain ${cert ? "correct-box" : "wrong-box"}"><strong>${cert ? "✅ Correta!" : "❌ Errada. A correta é " + q.ok + "."}</strong><br>${escapeHtml(q.e)}</div>`;
+}
+if (resp !== undefined && treino.modo === "final") {
+html += `<p class="muted-sm" style="margin-top:12px;">Resposta registrada. A correção aparecerá no final do treino.</p>`;
+}
+
+html += `<div class="row between" style="margin-top:18px; gap:10px; flex-wrap:wrap;">
+<button class="btn" data-variant="ghost" type="button" id="btnAnterior" ${treino.pos === 0 ? "disabled" : ""}>← Anterior</button>
+<button class="btn" type="button" id="btnProxima">${treino.pos === total - 1 ? "Finalizar" : "Próxima →"}</button>
+</div>
+</div>`;
+area.innerHTML = html;
+
+area.querySelectorAll("#alts .alt-btn").forEach(btn => {
+btn.addEventListener("click", () => responder(q, parseInt(btn.dataset.orig, 10)));
+});
+document.getElementById("btnProxima").addEventListener("click", avancar);
+const ant = document.getElementById("btnAnterior");
+if (ant) ant.addEventListener("click", () => { if (treino.pos > 0) { treino.pos--; renderTreino(); } });
+}
+
+function responder(q, idxOrig) {
+if (treino.respostas[q.id] !== undefined) return;
+if (q.ok === null) {
+treino.respostas[q.id] = { idx: idxOrig };
+renderTreino();
+window.skipUI.toast("Sem gabarito: confira no caderno", { type: "error" });
+return;
+}
+const corretaOrig = LETRAS.indexOf(q.ok);
+const correta = idxOrig === corretaOrig;
+treino.respostas[q.id] = { idx: idxOrig, correta };
+if (correta) treino.acertos++;
+registrarResposta(q, correta, idxOrig);
+renderTreino();
+if (treino.modo === "imediata") {
+window.skipUI.toast(correta ? "Resposta correta!" : "Resposta incorreta", { type: correta ? "success" : "error" });
+}
+}
+
+function avancar() {
+if (treino.pos < treino.lista.length - 1) { treino.pos++; renderTreino(); }
+else {
+if (treino.modo === "final") {
+treino.acertos = 0;
+treino.lista.forEach(q => {
+const r = treino.respostas[q.id];
+if (r && q.ok !== null) {
+const c = r.idx === LETRAS.indexOf(q.ok);
+if (c) treino.acertos++;
+registrarResposta(q, c, r.idx);
+}
+});
+}
+treino.final = true;
+renderTreino();
+}
+}
+
+function renderResultadoTreino() {
+const area = document.getElementById("treinoArea");
+const comGab = treino.lista.filter(q => q.ok !== null);
+const respondidas = comGab.filter(q => treino.respostas[q.id] !== undefined).length;
+const pct = comGab.length ? Math.round((treino.acertos / comGab.length) * 100) : 0;
+let itens = treino.lista.map(q => {
+const r = treino.respostas[q.id];
+let st = "—";
+if (q.ok === null) st = "sem gabarito";
+else if (r === undefined) st = "não respondida";
+else st = r.idx === LETRAS.indexOf(q.ok) ? "✅ certa" : "❌ errada (gabarito " + q.ok + ")";
+return `<div class="wrong-item"><strong>${escapeHtml(q.m)} · ${q.p}º sem Q${q.n}</strong> — ${st}<div class="muted-sm" style="margin-top:4px;">${escapeHtml(q.e)}</div></div>`;
+}).join("");
+area.innerHTML = `
+<div class="hero" style="margin-bottom:16px;">
+<div class="muted-sm">Resultado do treino</div>
+<div class="hero-val">${pct}%</div>
+<p class="m-0">${treino.acertos} acertos em ${comGab.length} questões com gabarito (${respondidas} respondidas)</p>
+</div>
+<div class="panel p-4">
+<div class="row gap-2" style="flex-wrap:wrap; margin-bottom:12px;">
+<button class="btn" type="button" id="btnNovoTreino">Novo treino</button>
+<button class="btn" data-variant="outline" type="button" id="btnCopiarRes">Copiar resumo</button>
+</div>
+${itens}
+</div>`;
+document.getElementById("btnNovoTreino").addEventListener("click", () => { treino = null; area.innerHTML = ""; });
+document.getElementById("btnCopiarRes").addEventListener("click", () => {
+const txt = `Treino Fatec: ${treino.acertos}/${comGab.length} (${pct}%)`;
+if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(() => {});
+window.skipUI.toast("Resumo copiado: " + txt, { type: "success" });
+});
+}
+
+/* ===== Simulado ===== */
+let sim = null;
+let simTimer = null;
+
+function renderSimuladoIdle() {
+if (!sim) {
+document.getElementById("simArea").innerHTML = "";
+document.getElementById("simStatus").textContent = "Não iniciado";
+}
+}
+
+document.getElementById("btnNovoSimulado").addEventListener("click", iniciarSimulado);
+
+function iniciarSimulado() {
+const elegiveis = QUESTOES.filter(q => q.ok !== null);
+const pool = embaralhar(elegiveis).slice(0, 60);
+sim = {
+lista: pool, resp: {}, duvida: {}, pos: 0,
+inicio: Date.now(), fim: Date.now() + 5 * 3600 * 1000, final: false
+};
+document.getElementById("simStatus").textContent = "Em andamento";
+renderSimulado();
+startSimTimer();
+window.skipUI.toast("Simulado iniciado: 60 questões, 5 horas");
+}
+
+function startSimTimer() {
+if (simTimer) clearInterval(simTimer);
+simTimer = setInterval(() => {
+const el = document.getElementById("simTempo");
+if (!sim || sim.final) { clearInterval(simTimer); return; }
+const rest = Math.max(0, sim.fim - Date.now());
+if (el) el.textContent = fmtTempo(rest);
+if (rest <= 0) { clearInterval(simTimer); corrigirSimulado(true); }
+}, 1000);
+}
+
+function fmtTempo(ms) {
+const s = Math.floor(ms / 1000);
+const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
+return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
+}
+
+function renderSimulado() {
+const area = document.getElementById("simArea");
+if (!sim) return;
+if (sim.final) { renderResultadoSim(); return; }
+const q = sim.lista[sim.pos];
+const respondidas = Object.keys(sim.resp).length;
+const grid = sim.lista.map((item, i) => {
+let cls = "gn";
+if (sim.resp[item.id] !== undefined) cls += " answered";
+if (sim.duvida[item.id]) cls += " doubt";
+if (i === sim.pos) cls += " current";
+return `<button class="${cls}" type="button" data-i="${i}" aria-label="Questão ${i + 1}">${i + 1}</button>`;
+}).join("");
+const r = sim.resp[q.id];
+area.innerHTML = `
+<div class="row between" style="margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+<div class="pill" id="simTempo">${fmtTempo(Math.max(0, sim.fim - Date.now()))}</div>
+<div class="pill">Respondidas: ${respondidas}/60</div>
+<div class="pill">Em dúvida: ${Object.keys(sim.duvida).filter(k => sim.duvida[k]).length}</div>
+</div>
+<div class="card-q">
+<div class="row between" style="flex-wrap:wrap; gap:8px;">
+<span class="pill">${escapeHtml(q.m)}</span>
+<span class="muted-sm">Questão ${sim.pos + 1} de 60</span>
+</div>
+<p style="font-size:1.02rem; line-height:1.6; margin:14px 0;">${escapeHtml(q.q)}</p>
+<div id="simAlts">
+${q.a.map((t, i) => `<button class="alt-btn ${r && r.idx === i ? "selected-pending" : ""}" type="button" data-idx="${i}" aria-label="Alternativa ${LETRAS[i]}"><span class="alt-letter">${LETRAS[i]}</span><span>${escapeHtml(t)}</span></button>`).join("")}
+</div>
+<div class="row between" style="margin-top:14px; gap:10px; flex-wrap:wrap;">
+<label class="chk"><input type="checkbox" id="simDuvida" ${sim.duvida[q.id] ? "checked" : ""}> Marcar em dúvida</label>
+<div class="row gap-2">
+<button class="btn" data-variant="ghost" type="button" id="simAnt" ${sim.pos === 0 ? "disabled" : ""}>← Anterior</button>
+<button class="btn" type="button" id="simProx" ${sim.pos === 59 ? "disabled" : ""}>Próxima →</button>
+</div>
+</div>
+</div>
+<div class="panel p-3" style="margin-top:14px;">
+<div class="grid-nav">${grid}</div>
+</div>
+<div class="row" style="margin-top:14px;">
+<button class="btn" type="button" id="btnCorrigir">Corrigir simulado</button>
+</div>`;
+
+area.querySelectorAll("#simAlts .alt-btn").forEach(b => b.addEventListener("click", () => {
+sim.resp[q.id] = { idx: parseInt(b.dataset.idx, 10) };
+renderSimulado();
+}));
+document.getElementById("simDuvida").addEventListener("change", e => {
+sim.duvida[q.id] = e.target.checked; renderSimulado();
+});
+document.getElementById("simAnt").addEventListener("click", () => { if (sim.pos > 0) { sim.pos--; renderSimulado(); } });
+document.getElementById("simProx").addEventListener("click", () => { if (sim.pos < 59) { sim.pos++; renderSimulado(); } });
+area.querySelectorAll(".gn").forEach(b => b.addEventListener("click", () => { sim.pos = parseInt(b.dataset.i, 10); renderSimulado(); }));
+document.getElementById("btnCorrigir").addEventListener("click", () => corrigirSimulado(false));
+}
+
+function corrigirSimulado(porTempo) {
+if (!sim || sim.final) return;
+sim.final = true;
+clearInterval(simTimer);
+let acertos = 0;
+const porMat = {};
+sim.lista.forEach(q => {
+porMat[q.m] = porMat[q.m] || { t: 0, a: 0 };
+porMat[q.m].t++;
+const r = sim.resp[q.id];
+if (r !== undefined) {
+const c = r.idx === LETRAS.indexOf(q.ok);
+if (c) { acertos++; porMat[q.m].a++; }
+registrarResposta(q, c, r.idx);
+}
+});
+const nota = acertos;
+const pct = Math.round((acertos / 60) * 100);
+state.simulados.unshift({ data: new Date().toLocaleString("pt-BR"), nota, pct, porMat, porTempo: !!porTempo });
+state.simulados = state.simulados.slice(0, 20);
+saveState();
+document.getElementById("simStatus").textContent = "Corrigido";
+renderSimulado();
+window.skipUI.toast(porTempo ? "Tempo esgotado: simulado corrigido" : "Simulado corrigido: " + nota + "/60", { type: "success" });
+}
+
+function renderResultadoSim() {
+const area = document.getElementById("simArea");
+const ultimo = state.simulados[0];
+const mats = Object.keys(ultimo.porMat).sort();
+const barras = mats.map(m => {
+const d = ultimo.porMat[m];
+const p = d.t ? Math.round((d.a / d.t) * 100) : 0;
+return `<div class="bar-row"><span>${m}</span><div class="bar-track"><div class="bar-fill" style="width:${p}%"></div></div><span>${d.a}/${d.t}</span></div>`;
+}).join("");
+const erradas = sim.lista.filter(q => {
+const r = sim.resp[q.id];
+return r !== undefined && r.idx !== LETRAS.indexOf(q.ok);
+});
+area.innerHTML = `
+<div class="hero" style="margin-bottom:16px;">
+<div class="muted-sm">Nota do simulado</div>
+<div class="hero-val">${ultimo.nota}/60</div>
+<p class="m-0">${ultimo.pct}% de acerto · ${Object.keys(sim.resp).length} questões respondidas</p>
+</div>
+<div class="panel p-4" style="margin-bottom:14px;">
+<h3 class="text-base font-bold m-0">Desempenho por matéria</h3>
+<p class="muted-sm m-0" style="margin-bottom:10px;">Acertos sobre o total de questões de cada matéria no simulado.</p>
+${barras}
+</div>
+<div class="panel p-4">
+<h3 class="text-base font-bold m-0">Erradas (${erradas.length})</h3>
+<p class="muted-sm m-0" style="margin-bottom:10px;">Revise cada uma e confira a explicação.</p>
+${erradas.map(q => `<div class="wrong-item"><strong>${escapeHtml(q.m)} · Q${q.n} (${q.p}º sem)</strong> — gabarito ${q.ok}<div class="muted-sm">${escapeHtml(q.e)}</div></div>`).join("") || '<p class="m-0">Nenhum erro registrado.</p>'}
+</div>
+<div class="row" style="margin-top:14px; gap:10px; flex-wrap:wrap;">
+<button class="btn" type="button" id="btnNovoSim2">Novo simulado</button>
+<button class="btn" data-variant="outline" type="button" id="btnCopiarSim">Copiar resultado</button>
+</div>`;
+document.getElementById("btnNovoSim2").addEventListener("click", iniciarSimulado);
+document.getElementById("btnCopiarSim").addEventListener("click", () => {
+const txt = `Simulado Fatec: ${ultimo.nota}/60 (${ultimo.pct}%)`;
+if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(() => {});
+window.skipUI.toast("Resultado copiado: " + txt, { type: "success" });
+});
+}
+
+/* ===== Roteiro ===== */
+function renderRoteiro() {
+const list = document.getElementById("roteiroList");
+list.innerHTML = ROTEIRO.map((s, i) => {
+const feita = state.roteiro.includes(i);
+return `<div class="week ${feita ? "done" : ""}">
+<div class="row between" style="flex-wrap:wrap; gap:8px;">
+<strong>Semana ${i + 1} · ${s.t}</strong>
+<label class="chk"><input type="checkbox" data-semana="${i}" ${feita ? "checked" : ""}> Concluída</label>
+</div>
+<ul>${s.items.map(it => `<li>${escapeHtml(it)}</li>`).join("")}</ul>
+<div class="muted-sm">Meta: ${escapeHtml(s.meta)}</div>
+</div>`;
+}).join("");
+list.querySelectorAll("input[data-semana]").forEach(cb => cb.addEventListener("change", () => {
+const i = parseInt(cb.dataset.semana, 10);
+if (cb.checked) { if (!state.roteiro.includes(i)) state.roteiro.push(i); }
+else state.roteiro = state.roteiro.filter(x => x !== i);
+saveState(); renderRoteiro(); atualizarProgressoRoteiro();
+}));
+atualizarProgressoRoteiro();
+const pesoHtml = PESOS.map(([m, v]) => `<div class="weight-row"><span>${m}</span><div class="bar-track"><div class="bar-fill" style="width:${v * 5}%"></div></div><span>${v}%</span></div>`).join("");
+document.getElementById("pesoChart").innerHTML = pesoHtml;
+document.getElementById("assuntosList").innerHTML = ASSUNTOS.map(a => `<li>${escapeHtml(a)}</li>`).join("");
+}
+function atualizarProgressoRoteiro() {
+document.getElementById("roteiroProgress").textContent = state.roteiro.length + " de 11 concluídas";
+}
+document.getElementById("btnResetRoteiro").addEventListener("click", () => {
+state.roteiro = []; saveState(); renderRoteiro();
+window.skipUI.toast("Progresso do roteiro limpo");
+});
+
+/* ===== Desempenho ===== */
+function renderDesempenho() {
+let totalT = 0, totalA = 0;
+const porMat = {};
+MATERIAS.forEach(m => porMat[m] = { t: 0, a: 0 });
+Object.keys(state.stats).forEach(id => {
+const q = QUESTOES.find(x => x.id === id);
+if (!q) return;
+const s = state.stats[id];
+totalT += s.t; totalA += s.a;
+porMat[q.m].t += s.t; porMat[q.m].a += s.a;
+});
+const taxa = totalT ? Math.round((totalA / totalT) * 100) : 0;
+document.getElementById("kpiArea").innerHTML = `
+<div class="hero">
+<div class="muted-sm">Taxa geral de acerto</div>
+<div class="hero-val">${taxa}%</div>
+<p class="m-0">${totalA} acertos em ${totalT} respostas · ${state.erros.length} questões erradas a revisar</p>
+</div>`;
+document.getElementById("barrasMateria").innerHTML = MATERIAS.map(m => {
+const d = porMat[m];
+const p = d.t ? Math.round((d.a / d.t) * 100) : 0;
+return `<div class="bar-row"><span>${m}</span><div class="bar-track"><div class="bar-fill" style="width:${p}%"></div></div><span>${d.t ? p + "%" : "—"}</span></div>`;
+}).join("");
+const hist = document.getElementById("historicoSim");
+hist.innerHTML = state.simulados.length
+? state.simulados.map(s => `<div class="wrong-item"><strong>${s.nota}/60</strong> (${s.pct}%) · ${escapeHtml(s.data)}${s.porTempo ? ' <span class="pill">tempo esgotado</span>' : ""}</div>`).join("")
+: '<p class="muted-sm m-0">Nenhum simulado corrigido ainda. Faça um na aba Simulado.</p>';
+const errosDiv = document.getElementById("listaErros");
+const errosQs = state.erros.map(id => QUESTOES.find(q => q.id === id)).filter(Boolean);
+errosDiv.innerHTML = errosQs.length
+? errosQs.map(q => `<div class="wrong-item"><strong>${escapeHtml(q.m)} · Q${q.n} (${q.p}º sem)</strong><div class="muted-sm" style="margin-top:4px;">${escapeHtml(q.q.slice(0, 160))}${q.q.length > 160 ? "…" : ""}</div></div>`).join("")
+: '<p class="muted-sm m-0">Nenhum erro registrado ainda. Responda questões no Treinar para acompanhar.</p>';
+}
+document.getElementById("btnTreinarErros").addEventListener("click", () => {
+if (!state.erros.length) { window.skipUI.toast("Você ainda não tem erros para revisar", { type: "error" }); return; }
+activateTab("treinar");
+iniciarTreino([], "all", "imediata", false, state.erros.slice());
+});
+
+/* ===== Init ===== */
+popularMaterias();
+aplicarTema(state.tema || "dark");
+activateTab("treinar");
+document.addEventListener("keydown", e => {
+if (!treino || treino.final) return;
+if (document.getElementById("view-treinar").classList.contains("active") === false) return;
+const k = e.key.toUpperCase();
+if (LETRAS.includes(k)) {
+const btn = document.querySelector(`#alts .alt-btn[data-letra="${k}"]`);
+if (btn) btn.click();
+} else if (e.key === "Enter") {
+const p = document.getElementById("btnProxima");
+if (p) p.click();
+}
+});
+</script>
+</body>
+</html>
